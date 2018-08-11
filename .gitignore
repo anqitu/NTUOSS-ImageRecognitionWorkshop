@@ -57,6 +57,5 @@ docs/_build/
 # PyBuilder
 target/
 
-data/train/corgi butt/
-
 data/
+tensorboard/
