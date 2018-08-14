@@ -4,27 +4,22 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-
-
-
-
-
 # Settings
-project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop/'
-data_path = os.path.join(project_path, 'DataFile')
-image_path_train = os.path.join(data_path, 'ImagesTrain')
-image_path_val = os.path.join(data_path, 'ImagesVal')
-model_path = os.path.join(project_path, 'Model')
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+data_path = os.path.join(project_path, 'data')
+image_path_train = os.path.join(data_path, 'train')
+image_path_val = os.path.join(data_path, 'validation')
+image_path_test = os.path.join(data_path, 'test')
+model_path = os.path.join(project_path, 'completed/model')
 
 SEED = 0
 BATCH_SIZE = 32
 EPOCHS = 25
 CLASSES = ['loaf bread', 'corgi butt']
-CLASS_SIZE = len(classes)
+CLASS_SIZE = len(CLASSES)
 IM_WIDTH, IM_HEIGHT = 150, 150
 TRAIN_SIZE = len([os.path.join(root, name) for root, dirs, files in os.walk(image_path_train) for name in files if name!= '.DS_Store'])
 VAL_SIZE = len([os.path.join(root, name) for root, dirs, files in os.walk(image_path_val) for name in files if name!= '.DS_Store'])
-
 
 
 # Build model ------------------------------------------------------------------
@@ -85,19 +80,16 @@ val_generator = val_datagen.flow_from_directory(
     batch_size=BATCH_SIZE,
     class_mode='binary')
 
-train_generator.class_indices
+print('Class Indices : {}'.format(train_generator.class_indices))
 
-
-
+# Train model
 train_start_time = time.time()
 model.fit_generator(
     train_generator,
-    steps_per_epoch= TRAIN_SIZE // BATCH_SIZE,
     epochs=EPOCHS,
     callbacks = [EarlyStopping(monitor='val_loss', patience=2, verbose=0), TensorBoard(log_dir="TensorBoard/logs/{}".format(time.time()))],
-    validation_data = val_generator,
-    validation_steps= VAL_SIZE // BATCH_SIZE)
-model.save(os.path.join(model_path, 'cnn_mdel'+'.h5'))
+    validation_data = val_generator)
+model.save(os.path.join(model_path, 'cnn_model.h5'))
 print("It takes {:.2f} min to train the model".format((time.time() - train_start_time)/60 ))
 
 # tensorboard --logdir=/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop/TensorBoard/logs

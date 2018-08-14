@@ -1,77 +1,74 @@
 # import the necessary packages
-from imutils import paths
-import argparse
-import requests
+import os
+import sys
+import urllib
 import cv2
-import os, sys, io
-from PIL import Image
+from queue import Queue
+from threading import Thread
+from time import strftime
+import pandas as pd
+
 from util import *
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 import warnings
 warnings.filterwarnings('ignore')
 
-def download_images(url_fpath, image_requested):
-	get_now()
-	cate_folder_train = os.path.join(image_path_train, get_fname_from_path(url_fpath))
-	cate_folder_val = os.path.join(image_path_val, get_fname_from_path(url_fpath))
-	ensure_directory(cate_folder_train)
-	ensure_directory(cate_folder_val)
 
-	urls = get_urls(url_fpath, image_requested)
-	urls_sum = urls.shape[0]
-	train_sum = int(urls_sum * 0.7)
+def download(url, dest):
+	try:
+		req = urllib.request.Request(url)
+		response = urllib.request.urlopen(req, timeout = 10)
+		content = response.read()
+		with open(dest, 'wb') as f:
+			f.write(content)
+	except Exception as e:
+		print(e, url)
 
-	count = 0
-	print("{:<10} Start downloading images for train for {}".format('[INFO]', get_fname_from_path(url_fpath).upper()))
-	for url in urls[:train_sum]:
-		try:
-			r = requests.get(url, timeout=15)
-			image = Image.open(io.BytesIO(r.content))
-			image_rgb = image.convert("RGB")
+# Thread pool code from Chris Hager's blog
+# reference: https://www.metachris.com/2016/04/python-threadpool/
+class Worker(Thread):
+	""" Thread executing tasks from a given tasks queue """
+	def __init__(self, tasks):
+		Thread.__init__(self)
+		self.tasks = tasks
+		self.daemon = True
+		self.start()
 
-			path = os.path.join(cate_folder_train, "{}.jpg".format(str(count).zfill(5)))
-			image_rgb.save(path, format='JPEG', quality=85)
+	def run(self):
+		while True:
+			func, args, kargs = self.tasks.get()
+			try:
+				func(*args, **kargs)
+			except Exception as e:
+				# An exception happened in this thread
+				print(e)
+			finally:
+				# Mark this task as done, whether an exception happened or not
+				self.tasks.task_done()
 
-			count += 1
-		except:
-			urls_sum -= 1
-			print("{:<10} error downloading ...skipping".format('[INFO]'))
+class ThreadPool:
+	""" Pool of threads consuming tasks from a queue """
+	def __init__(self, num_threads):
+		self.tasks = Queue(num_threads)
+		for _ in range(num_threads):
+			Worker(self.tasks)
 
-		if count % 50 == 0:
-			print("{:<10} downloaded: {}/{}".format('[INFO]',count, urls_sum))
-	train_count = count
-	print("{:<10} Downloaded {} images for train".format('[INFO]', train_count))
+	def add_task(self, func, *args, **kargs):
+		""" Add a task to the queue """
+		self.tasks.put((func, args, kargs))
 
-	print("{:<10} Start downloading images for validation for {}".format('[INFO]', get_fname_from_path(url_fpath).upper()))
-	for url in urls[train_sum:]:
-		try:
-			r = requests.get(url, timeout=15)
-			image = Image.open(io.BytesIO(r.content))
-			image_rgb = image.convert("RGB")
+	def map(self, func, args_list):
+		""" Add a list of tasks to the queue """
+		for args in args_list:
+			self.add_task(func, *args)
 
-			path = os.path.join(cate_folder_val, "{}.jpg".format(str(count).zfill(5)))
-			image_rgb.save(path, format='JPEG', quality=90)
+	def wait_completion(self):
+		""" Wait for completion of all the tasks in the queue """
+		self.tasks.join()
 
-			count += 1
-		except:
-			urls_sum -= 1
-			print("{:<10} error downloading ...skipping".format('[INFO]'))
-
-		if count % 50 == 0:
-			print("{:<10} downloaded: {}/{}".format('[INFO]',count, urls_sum))
-	print("{:<10} Downloaded {} images for validation".format('[INFO]', count - train_count))
-
-
-def get_urls(url_path, url_requested):
-	urls = np.load(url_path)
-	nrow = urls.shape[0]
-	if nrow < url_requested:
-		print("{:<10} Not enough urls for {}: {} is requested but {} detected'".format('[WARNING]', get_fname_from_path(url_path), url_requested, nrow ))
-	return urls[:url_requested]
-
-
-# loop over the image paths we just downloaded
+# loop over the image paths we just downloaded to ensure the image is in the correct format
 def check_image(folder):
 	for imagePath in get_sub_fpaths(folder):
 		delete = False
@@ -88,53 +85,88 @@ def check_image(folder):
 			os.remove(imagePath)
 
 # Get project path
-project_path = os.getcwd()
-data_path = os.path.join(project_path, 'DataFile')
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+data_path = os.path.join(project_path, 'data')
 url_data_path = os.path.join(data_path, 'urls')
-image_path_train = os.path.join(data_path, 'ImagesTrain')
-image_path_val = os.path.join(data_path, 'ImagesVal')
+image_path_train = os.path.join(data_path, 'train')
+image_path_val = os.path.join(data_path, 'validation')
+image_path_test = os.path.join(data_path, 'test')
 
-# Set limit for data size. Larger train size will get higher accuracy, but occupy more storagy and slow down the training speed.
-N_URL_LIMIT_LOW = 100 # Recommended
-N_URL_LIMIT_HIGH= 500 # Recommended
-# N_URL_LIMIT_LOW = 5 # For testing
-# N_URL_LIMIT_HIGH= 10 # For testing
+for path in [image_path_train, image_path_val, image_path_test]:
+	ensure_directory(path)
 
 classes = [get_fname_from_path(f) for f in get_sub_fnames(url_data_path)]
 print("{:<10} Numbe of Classes detected: {}".format('[INFO]', len(classes)))
 print("{:<10} Classes: {}".format('', str(classes)))
 
 
-if __name__ == '__main__':
-	argument_parser = argparse.ArgumentParser(description='Download images from urls provided')
-	argument_parser.add_argument('--url_fpath', default='all', type=str, help='The url file path to download images from. Download "all" by default')
-	argument_parser.add_argument('--count', default=100, type=int, help='How many images to download. 100 by default')
-	args = argument_parser.parse_args()
 
-	for path in [image_path_train, image_path_val]:
-		ensure_directory(path)
+tasks = []
 
-	if args.count < N_URL_LIMIT_LOW:
-		print("{:<10} Not enough urls for model training. {} insead of {} will be requested".format('[WARNING]', N_URL_LIMIT_LOW, args.count))
-		print("{:<10} You can change the N_URL_LIMIT_LOW setting".format(''))
-		args.count = N_URL_LIMIT_LOW
+url_paths = get_sub_fpaths(url_data_path)
+for url_path in url_paths:
+	urls = np.load(url_path)
+	train, test = train_test_split(urls, test_size=0.1, random_state=2018)
+	train, validation = train_test_split(train, test_size=0.3, random_state=2018)
+	category = os.path.basename(url_path).split('.')[0]
 
-	if args.count > N_URL_LIMIT_HIGH:
-		print("{:<10} Too many urls which will slow down the model training. {} insead of {} will be requested".format('[WARNING]', N_URL_LIMIT_HIGH, args.count))
-		print("{:<10} You can change the N_URL_LIMIT_HIGH setting".format(''))
-		args.count = N_URL_LIMIT_HIGH
+	for url in train:
+		dst_image_folder = os.path.join(image_path_train, category)
+		ensure_directory(dst_image_folder)
+		file_name = '{}.{}'.format(str(hash(url)), url.split('.')[-1])
+		dst_image_path = os.path.join(dst_image_folder, file_name)
+		if not os.path.exists(dst_image_path):
+			tasks.append([url, dst_image_path])
 
-	if args.url_fpath == 'all':
-		print("{:<10} Downloading from all url paths".format('[INFO]'))
-		url_fpaths = get_sub_fpaths(url_data_path)
-		for url_path in url_fpaths:
-			download_images(url_path, args.count)
-	else:
-		download_images(args.url_fpath, args.count)
+	for url in validation:
+		dst_image_folder = os.path.join(image_path_val, category)
+		ensure_directory(dst_image_folder)
+		file_name = '{}.{}'.format(str(hash(url)), url.split('.')[-1])
+		dst_image_path = os.path.join(dst_image_folder, file_name)
+		if not os.path.exists(dst_image_path):
+			tasks.append([url, dst_image_path])
 
-	print("{:<10} Start checking images".format('[INFO]'))
-	for image_path in [image_path_train, image_path_val]:
-		for cate_folder in get_subfolder_paths(image_path):
-			check_image(cate_folder)
-	print("{:<10} Finished checking images".format('[INFO]'))
-	sys.exit(1)
+	for url in test:
+		dst_image_folder = os.path.join(image_path_test, category)
+		ensure_directory(dst_image_folder)
+		file_name = '{}.{}'.format(str(hash(url)), url.split('.')[-1])
+		dst_image_path = os.path.join(dst_image_folder, file_name)
+		if not os.path.exists(dst_image_path):
+			tasks.append([url, dst_image_path])
+
+
+	print('{} train images to be downloaded for {}'.format(len(train), category))
+	print('{} validation images to be downloaded for {}'.format(len(validation), category))
+	print('{} test images to be downloaded for {}'.format(len(test), category))
+
+
+pool = ThreadPool(60)
+
+STEP  = 100
+start = 0
+num   = len(tasks)
+
+while start < num:
+	end = min(num, start + STEP)
+
+	# Add a block of tasks and wait till completion
+	pool.map(download, tasks[start:end])
+	pool.wait_completion()
+
+	print ('{} Finished downloading {} / {} files'.format(strftime('%Y-%m-%d %H:%M:%S'), end, num))
+	start = end
+print("Done!")
+
+
+print("{:<10} Start checking images".format('[INFO]'))
+for image_path in [image_path_train, image_path_val]:
+	for cate_folder in get_subfolder_paths(image_path):
+		check_image(cate_folder)
+print("{:<10} Finished checking images".format('[INFO]'))
+
+
+for image_path in [image_path_train, image_path_val, image_path_test]:
+	for cate_folder in get_subfolder_paths(image_path):
+		print("{:<10} Images in {}: {}".format('[INFO]', cate_folder, len(get_sub_fnames(cate_folder))))
+
+sys.exit(1)

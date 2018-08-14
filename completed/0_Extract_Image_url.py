@@ -1,12 +1,10 @@
 # Reference: https://gist.github.com/kekeblom/204a609ee295c81c3cc202ecbe68752c
 import os
 import time
-import argparse
 import requests
 import io
 import numpy as np
 from selenium import webdriver
-from util import *
 
 script_start_time = time.time()
 
@@ -49,33 +47,41 @@ def fetch_image_urls(query, num_urls_to_extract):
     print("{:<10} Managed to get {} images. {} will be returned as requetsed".format('[INFO]', num_urls_extracted, num_urls_to_return))
     return urls[:num_urls_to_return]
 
-def save_url_list_to_np(urls, path):
+def save_url_list_to_np(urls, label, path):
     import numpy as np
     x = np.array(urls)
     np.save(path, urls)
 
+    print("{:<10} Saved extracted {} urls of {} to {}".format('[CONGRATS]', len(urls), label, url_path))
+
 
 # Get project path
-project_path = os.getcwd()
-data_path = os.path.join(project_path, 'DataFile')
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+data_path = os.path.join(project_path, 'data')
 url_data_path = os.path.join(data_path, 'urls')
 
 if __name__ == '__main__':
-    argument_parser = argparse.ArgumentParser(description='Extract images urls from google image search')
-    argument_parser.add_argument('--query', type=str, help='The query to download images from')
-    argument_parser.add_argument('--count', default=100, type=int, help='How many images to fetch')
-    argument_parser.add_argument('--label', type=str, help="The directory in which to store the images (images/<label>)", required=True)
-    args = argument_parser.parse_args()
 
-    ensure_directory(data_path)
-    ensure_directory(url_data_path)
+    # use different query words to ensure sufficient images to feed the model.
+    corgi_butt_query_words = ['corgi butt', 'corgi butt animal', 'corgi butt cute', 'corgi butt puppy', 'corgi butt fat', 'corgi butt huge', 'corgi butt instagram', 'corgi butt groomed']
+    loaf_bread_query_words = ['loaf bread', 'loaf bread complete', 'loaf bread fresh', 'loaf bread homemade', 'loaf bread large', 'loaf bread wet', 'loaf bread dry']
 
-    urls = fetch_image_urls(args.query, args.count)
-    url_path = os.path.join(url_data_path, args.label)
-    save_url_list_to_np(urls, url_path)
+    urls_list = []
+    for query in corgi_butt_query_words:
+        urls = fetch_image_urls(query, 1000)
+        urls_list.extend(urls)
+    urls = list(set(urls_list))
+    len(urls)
+    url_path = os.path.join(url_data_path, 'corgi_butt')
+    save_url_list_to_np(urls, 'CORGI BUTT', url_path)
 
-    img = read_image_from_url(urls[0])
-    plot_one_image(img, text = args.label)
+    urls_list = []
+    for query in loaf_bread_query_words:
+        urls = fetch_image_urls(query, 1000)
+        urls_list.extend(urls)
+    urls = list(set(urls_list))
+    len(urls)
+    url_path = os.path.join(url_data_path, 'loaf_bread')
+    save_url_list_to_np(urls, 'LOAF BREAD', url_path)
 
-    print("{:<10} Saved extracted {} urls of {} to {}".format('[CONGRATS]', len(urls), args.label, url_path))
     exit(1)
