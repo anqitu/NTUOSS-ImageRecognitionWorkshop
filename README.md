@@ -1,1 +1,1 @@
-NTUOSS-ImageRecognicationWorkshop
+# NTUOSS Image Recognition Workshop

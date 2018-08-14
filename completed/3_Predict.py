@@ -18,7 +18,7 @@ IM_WIDTH, IM_HEIGHT = 150, 150
 
 from keras.preprocessing.image import ImageDataGenerator
 test_datagen =  ImageDataGenerator(rescale=1. / 255)
-generator = datagen.flow_from_directory (
+test_generator = test_datagen.flow_from_directory (
         image_path_test,
         target_size=(IM_WIDTH, IM_HEIGHT),
         batch_size=BATCH_SIZE,
