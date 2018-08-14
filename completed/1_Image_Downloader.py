@@ -85,7 +85,7 @@ def check_image(folder):
 			os.remove(imagePath)
 
 # Get project path
-project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognitionWorkshop'
 data_path = os.path.join(project_path, 'data')
 url_data_path = os.path.join(data_path, 'urls')
 image_path_train = os.path.join(data_path, 'train')
@@ -94,7 +94,7 @@ image_path_test = os.path.join(data_path, 'test')
 
 for path in [image_path_train, image_path_val, image_path_test]:
 	ensure_directory(path)
-
+url_data_path
 classes = [get_fname_from_path(f) for f in get_sub_fnames(url_data_path)]
 print("{:<10} Numbe of Classes detected: {}".format('[INFO]', len(classes)))
 print("{:<10} Classes: {}".format('', str(classes)))

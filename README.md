@@ -26,8 +26,17 @@ ___
 <!-- TODO: write about this workshop -->
 <!-- TODO: write about keras, colab -->
 
-For this tutorial, we'll be creating a keras model which can recognize the images of corgi butt and bread loaf\*
+For this tutorial, we'll be creating a keras model which can recognize the images of corgi butt and bread loaf
 
 #### 0.2 Initial Setup
 
 1.  Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
+
+
+data distribution:
+/train/cat: 3304
+/train/dog: 3601
+/validation/cat: 1400
+/validation/dog: 1546
+/test/cat: 537
+/test/dog: 584

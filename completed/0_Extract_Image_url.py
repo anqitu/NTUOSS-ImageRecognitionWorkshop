@@ -56,32 +56,32 @@ def save_url_list_to_np(urls, label, path):
 
 
 # Get project path
-project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognitionWorkshop'
 data_path = os.path.join(project_path, 'data')
 url_data_path = os.path.join(data_path, 'urls')
 
 if __name__ == '__main__':
 
     # use different query words to ensure sufficient images to feed the model.
-    corgi_butt_query_words = ['corgi butt', 'corgi butt animal', 'corgi butt cute', 'corgi butt puppy', 'corgi butt fat', 'corgi butt huge', 'corgi butt instagram', 'corgi butt groomed']
-    loaf_bread_query_words = ['loaf bread', 'loaf bread complete', 'loaf bread fresh', 'loaf bread homemade', 'loaf bread large', 'loaf bread wet', 'loaf bread dry']
+    dog_query_words = ['dog', 'puppy', 'dog cute', 'dog big', 'dog small', 'dog yellow', 'dog white', 'dog black', 'dog brown', 'dog fluffy']
+    cat_query_words = ['cat', 'cat lovely', 'cat small', 'cat big', 'cat white', 'cat black', 'cat yellow', 'cat fluffy', 'cat adorable', 'cat kitten']
 
     urls_list = []
-    for query in corgi_butt_query_words:
+    for query in dog_query_words:
         urls = fetch_image_urls(query, 1000)
         urls_list.extend(urls)
     urls = list(set(urls_list))
     len(urls)
-    url_path = os.path.join(url_data_path, 'corgi_butt')
-    save_url_list_to_np(urls, 'CORGI BUTT', url_path)
+    url_path = os.path.join(url_data_path, 'dog')
+    save_url_list_to_np(urls, 'DOG', url_path)
 
     urls_list = []
-    for query in loaf_bread_query_words:
+    for query in cat_query_words:
         urls = fetch_image_urls(query, 1000)
         urls_list.extend(urls)
     urls = list(set(urls_list))
     len(urls)
-    url_path = os.path.join(url_data_path, 'loaf_bread')
-    save_url_list_to_np(urls, 'LOAF BREAD', url_path)
+    url_path = os.path.join(url_data_path, 'cat')
+    save_url_list_to_np(urls, 'CAT', url_path)
 
     exit(1)
