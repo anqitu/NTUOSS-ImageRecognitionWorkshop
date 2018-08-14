@@ -26,10 +26,7 @@ ___
 <!-- TODO: write about this workshop -->
 <!-- TODO: write about keras, colab -->
 
-For this tutorial, we'll be creating a keras model which can recognize the images of corgi butt and bread loaf
-1. get random facts about cats,
-2. get random cat pictures, and
-3. talk to an actual cat *LIVE*!\*
+For this tutorial, we'll be creating a keras model which can recognize the images of corgi butt and bread loaf\*
 
 #### 0.2 Initial Setup
 
