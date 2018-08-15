@@ -2,7 +2,7 @@
 
 *by [Tu Anqi](https://github.com/anqitu) for NTU Open Source Society*
 
-This workshop assumes intermediate knowledge of Python.
+This workshop assumes beginner-level knowledge of Python.
 
 **Disclaimer:** *This document is only meant to serve as a reference for the attendees of the workshop. It does not cover all the concepts or implementation details discussed during the actual workshop.*
 ___
@@ -30,12 +30,15 @@ ___
 For this tutorial, we'll be creating a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
 
 1. What are [CNNs](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)?
+
 Convolutional Neural Networks (CNNs or ConvNets) are a category of [Neural Networks](https://ujjwalkarn.me/2016/08/09/quick-intro-neural-networks/) that have proven very effective in areas such as image recognition and classification. CNNs have been successful in identifying faces, objects and traffic signs apart from powering vision in robots and self driving cars.
 
 2. What is [Keras](https://keras.io/)?
+
 Keras is an open source neural network library written in Python. It was developed with a focus on enabling fast experimentation.
 
 3. What is [Colaboratory](https://colab.research.google.com/notebooks/welcome.ipynb)?
+
 Colaboratory is a Google research project created to help disseminate machine learning education and research. It is a free Jupyter notebook environment that requires no setup and runs entirely in the cloud.
 
 #### 0.2 Initial Setup
