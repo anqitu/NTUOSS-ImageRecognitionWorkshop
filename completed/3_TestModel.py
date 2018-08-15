@@ -1,19 +1,12 @@
-import os
-
 # Settings
+import os
 project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
 data_path = os.path.join(project_path, 'data')
-image_path_train = os.path.join(data_path, 'train')
-image_path_val = os.path.join(data_path, 'validation')
 image_path_test = os.path.join(data_path, 'test')
-model_path = os.path.join(project_path, 'completed/model/cnn_model.h5')
+model_path = os.path.join(project_path, 'completed/model')
 
-
-SEED = 0
+## Task 5 - Test Model
 BATCH_SIZE = 32
-EPOCHS = 25
-CLASSES = ['loaf bread', 'corgi butt']
-CLASS_SIZE = len(CLASSES)
 IM_WIDTH, IM_HEIGHT = 150, 150
 
 from keras.preprocessing.image import ImageDataGenerator
@@ -24,6 +17,10 @@ test_generator = test_datagen.flow_from_directory (
         batch_size=BATCH_SIZE,
         class_mode=None,  # only data, no labels
         shuffle=False)  # keep data in same order as labels
+
+from keras.models import load_model
+model = load_model(os.path.join(model_path, 'cnn_model.h5'))
+
 
 probabilities = model.predict_generator(generator, 2000)
 

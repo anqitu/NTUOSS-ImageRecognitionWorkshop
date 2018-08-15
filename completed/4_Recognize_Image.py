@@ -1,5 +1,4 @@
-from keras.models import load_model
-model = load_model(os.path.join(model_path, 'cnn_model.h5'))
+## Task 6 - Recognize Image
 
 # Predict images ---------------------------------------------------------------
 def read_image_from_path(image_path, target_size = None):
@@ -36,12 +35,22 @@ def preprocess_image(img, target_size):
     return img
 
 def process_result(predict_class):
-    return 'corgi butt' if predict_class == 0 else 'loaf bread'
+    return 'dog' if predict_class == 0 else 'cat'
+
+# Settings
+import os
+project_path = '/Users/anqitu/Workspaces/OSS/NTUOSS-ImageRecognicationWorkshop'
+data_path = os.path.join(project_path, 'data')
+image_path_test = os.path.join(data_path, 'test')
+model_path = os.path.join(project_path, 'completed/model')
+
+IM_WIDTH, IM_HEIGHT = 150, 150
+
+from keras.models import load_model
+model = load_model(os.path.join(model_path, 'cnn_model.h5'))
 
 
-
-image_path = os.path.join(image_path_test, 'butt1.jpg')
-image = read_image_from_path(image_path)
+image = read_image_from_url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg')
 image = preprocess_image(image, (IM_WIDTH, IM_HEIGHT))
 predict_class = model.predict_classes(image)
 model.predict(image)
