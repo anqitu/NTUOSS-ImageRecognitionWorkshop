@@ -43,6 +43,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 1.  Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
 
 Inside the folder, you will find 3 folders:
+
 ```
 /NTUOSS-ImageRecognitionWorkshop
   /data
@@ -51,6 +52,7 @@ Inside the folder, you will find 3 folders:
 ```
 
 In the /data folder, there are train, test and validation image folders, with the data distribution shown as below.
+
 ```
 /data
   /train:
@@ -65,7 +67,13 @@ In the /data folder, there are train, test and validation image folders, with th
 ```
 
 <!-- TODO: explain train vs validation vs test-->
-The train set will be used to feed the model that we are going to build while the validation set will be used as a sign for stopping the training to prevent overfit. The purpose of the test set if to measure the accuracy of our model.
+The model is initially fit on a training dataset, which is a set of examples used to fit the parameters of the model (e.g. weights of connections between neurons in neural networks). The training dataset often consists of pairs of an input vector and the corresponding target. In our case, each image is an input vector, while the image's label (dog or cat) is a target.
+
+Then, the fitted model is used to predict the responses for the observations in the validation dataset. The validation dataset provides an unbiased evaluation of the fitted model. It can be used for regularization by early stopping: stop training when the error on the validation dataset increases, as this is a sign of overfitting to the training dataset.
+
+Finally, the test dataset is a dataset used to provide an unbiased evaluation of a final model fit on the training dataset.
+
+The /complete folder contains complete codes for this project, including extracting image urls, downloading images, training model and predicting images. This workshop will focus on the model training and image recognition part. For those who are interested in how I crawl all the images from google, do take a look on the other two scripts.
 
 ```
 /complete
@@ -77,26 +85,30 @@ The train set will be used to feed the model that we are going to build while th
   /3_Recognize_Image.py
   /util.py
 ```
-This folder contains complete codes, including extracting image urls, downloading images, training model and predicting images. This workshop will focus on the model training and image recognition part. For those who are interested in how I crawl all the images from google, do take a look on the other two scripts.
+
+This /start folder contains the incomplete codes for the purpose of this workshop. Now, let's start by opening the Train_Model.py file with colaboratory.
 
 ```
 /start
   /Train_Model.py
   /Predict.py
 ```
-This folder contains the incomplete codes for training the model. Now, let's start by opening the Train_Model.py file with colaboratory.
+
 
 ![task 0.2 screenshot a](screenshots/task_0_2.png?raw=true)
 
 ## Task 1 - Virtual Environment
 
-#### 1.1 Change Runtime Type
+#### 1.1 Change to a Free GPU Runtime
 <!-- TODO: write about CPU vs GPU -->
 <!-- TODO: screenshot of changing GPU -->
-
+Apart from saving us trouble in setting up environments, Colab also provides free GPU that speeds up the training and prevents your own laptop from overheating.
+Select "Runtime," "Change runtime type,".
 ![task 1.1 screenshot a](screenshots/task_1_1_a.png?raw=true)
 
+On this pop-up, select GPU.
 ![task 1.1 screenshot b](screenshots/task_1_1_b.png?raw=true)
+
 
 #### 1.2 Mount Google Drive
 <!-- TODO: screenshot for token -->
