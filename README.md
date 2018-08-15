@@ -104,11 +104,15 @@ This /start folder contains the incomplete codes for the purpose of this worksho
 <!-- TODO: screenshot of changing GPU -->
 Apart from saving us trouble in setting up environments, Colab also provides free GPU that speeds up the training and prevents your own laptop from overheating.
 Select "Runtime," "Change runtime type,".
-![task 1.1 screenshot a](screenshots/task_1_1_a.png?raw=true)
+
+<p align="center"> 
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_a.png" width="600">
+</p>
 
 On this pop-up, select GPU.
-![task 1.1 screenshot b](screenshots/task_1_1_b.png?raw=true)
-
+<p align="center"> 
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_b.png" width="600">
+</p>
 
 #### 1.2 Mount Google Drive
 <!-- TODO: screenshot for token -->
