@@ -23,10 +23,6 @@ ___
 
 #### 0.1 Introduction
 
-<!-- TODO: write about cnn -->
-<!-- TODO: write about keras -->
-<!-- TODO: write about colab -->
-
 For this tutorial, we'll be creating a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
 
 1. What are [CNNs](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)?\
@@ -40,7 +36,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 #### 0.2 Initial Setup
 
-1.  Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
+Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
 
 Inside the folder, you will find 3 folders:
 
@@ -101,7 +97,6 @@ This /start folder contains the incomplete codes for the purpose of this worksho
 
 #### 1.1 Change to a Free GPU Runtime
 <!-- TODO: write about CPU vs GPU -->
-<!-- TODO: screenshot of changing GPU -->
 Apart from saving us trouble in setting up environments, Colab also provides free GPU that speeds up the training and prevents your own laptop from overheating.
 
 Select "Runtime," "Change runtime type,".
@@ -147,7 +142,7 @@ To import tha data into the VM, we will mount the google drive on the machine us
 (Reference: https://gist.github.com/Joshua1989/dc7e60aa487430ea704a8cb3f2c5d6a6)
 
 ```python
-# Task: 1.2.1 Installing google-drive-ocamlfuse
+# Task: 1.2.1 Install google-drive-ocamlfuse
 !apt-get install -y -qq software-properties-common python-software-properties module-init-tools
 !add-apt-repository -y ppa:alessandro-strada/ppa 2>&1 > /dev/null
 !apt-get update -qq 2>&1 > /dev/null
@@ -161,43 +156,44 @@ from google.colab import auth
 auth.authenticate_user()
 from oauth2client.client import GoogleCredentials
 creds = GoogleCredentials.get_application_default()
-```
 
-Next, set up google-drive-ocamlfuse.
-```python
-# Task: 1.2.3 Setting up google-drive-ocamlfuse
 import getpass
 !google-drive-ocamlfuse -headless -id={creds.client_id} -secret={creds.client_secret} < /dev/null 2>&1 | grep URL
 vcode = getpass.getpass()
 !echo {vcode} | google-drive-ocamlfuse -headless -id={creds.client_id} -secret={creds.client_secret}
 ```
-At this step you will be asked two times to click on a link to allow access to your drive, at each step a token will be generated. Copy paste the token to the notebook.
+At this step you will be asked two times to authenticate the access to your drive, at each step a token will be generated:
+- Click on the link to log into your google account.
+- Allow access to your drive.
+- Copy the token (The token looks like this - 4/PABmEY7BRPd3jPR9BI9I4R99gc9QITTYFUVDU76VR) Press Enter
+- Switch to the notebook to paste the token in the 'Enter verification code' bar.
+- Press 'Enter'
 
 And then you can finally mount your google drive.
 ```python
-# TASK 1.2.4: Mount Google Drive in local Colab VM
+# TASK 1.2.3: Mount Google Drive in local Colab VM
 !mkdir -p drive
 !google-drive-ocamlfuse drive
 !ls
 ```
 
-Now, check working directory
+You should see a /drive folder inside the current working directory. Running the code below should let you see the folders inside your google drive.
 ```python
-# TASK 1.2.5: Mount Google Drive in local Colab VM
 !ls drive
 ```
 
+Then, access out working directory /drive/NTUOSS-ImageRecognitionWorkshop. Running the code below should let you access the working directory of this workshop.
 ```python
 !ls drive/NTUOSS-ImageRecognitionWorkshop
 ```
 
+Lastly, check the /data directory.
 ```python
 !ls drive/NTUOSS-ImageRecognitionWorkshop/data
 ```
 
-
-#### 1.3 Project Setting
-Finally, set up the path to the dataset.
+#### TASK 1.3: Configure Project Setting
+Finally, configure the path to the dataset.
 ```python
 # TASK 1.3 : Set up the path to the dataset
 import os
@@ -207,11 +203,10 @@ image_path_train = os.path.join(data_path, 'train')
 image_path_val = os.path.join(data_path, 'validation')
 ```
 
-
 ## Task 2 - Preprocess Images
 
 #### 2.1 Configure Image Augmentation
-This is the augmentation configuration we will use for training.
+<!-- TODO: image augmentation -->
 
 ```python
 # TASK 2.1: Create ImageDataGenerator
@@ -219,14 +214,14 @@ This is the augmentation configuration we will use for training.
 
 from keras.preprocessing.image import ImageDataGenerator
 
-train_datagen =  ImageDataGenerator(
+datagen_train =  ImageDataGenerator(
     rescale=1. / 255,
     rotation_range=30,
     width_shift_range=0.2,
     height_shift_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True)
-val_datagen = ImageDataGenerator(
+datagen_val = ImageDataGenerator(
     rescale=1. / 255)
 ```
 
@@ -235,8 +230,15 @@ val_datagen = ImageDataGenerator(
 <!-- TODO: class_mode -->
 
 ```python
-# TASK 2.2 : Generate Image Data from Directory
-# use .flow_from_directory() to generate batches of image data (and their labels) directly from our jpgs in their respective folders.
+# TASK 2.2.1: Configure data setting
+IM_WIDTH, IM_HEIGHT = 150, 150
+BATCH_SIZE = 32
+```
+
+Use .flow_from_directory() to generate batches of image data (and their labels) directly from our jpgs in their respective folders.
+
+```python
+# TASK 2.2.2 : Generate Image Data from Directory
 
 train_generator = train_datagen.flow_from_directory(
     image_path_train,
@@ -256,6 +258,9 @@ print('Class Indices : {}'.format(train_generator.class_indices))
 ## Task 3 - Build Basic Model
 
 #### 3.1 Import the Keras libraries and packages
+
+<!-- TODO: Cnov/Relu/Pooling -->
+
 We’ve imported Conv2D from keras.layers, this is to perform the convolution operation i.e the first step of a CNN, on the training images. Since we are working on images here, which a basically 2 Dimensional arrays, we’re using Convolution 2-D,
 
 We’ve imported MaxPooling2D from keras.layers, which is used for pooling operation, that is the step — 2 in the process of building a cnn. For building this particular neural network, we are using a Maxpooling function, there exist different types of pooling operations like Min Pooling, Mean Pooling, etc. Here in MaxPooling we need the maximum value pixel from the respective region of interest.
@@ -269,8 +274,6 @@ Let's build our first model, a simple stack of 3 convolution layers with a ReLU 
 
 #### 3.3 First Stack - Input Layer
 
-
-<!-- TODO: Cnov/Relu/Pooling -->
 
 #### 3.4 Second Stack
 
