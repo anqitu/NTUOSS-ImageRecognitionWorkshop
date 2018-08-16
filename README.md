@@ -90,8 +90,9 @@ This /start folder contains the incomplete codes for the purpose of this worksho
   /Predict.py
 ```
 
-
-![task 0.2 screenshot a](screenshots/task_0_2.png?raw=true)
+<p align="center"> 
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2.png" width="600">
+</p>
 
 ## Task 1 - Virtual Environment
 
