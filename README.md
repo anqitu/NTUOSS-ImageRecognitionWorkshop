@@ -34,6 +34,12 @@ Keras is an open source neural network library written in Python. It was develop
 3. What is [Colaboratory](https://colab.research.google.com/notebooks/welcome.ipynb)?\
 Colaboratory is a Google research project created to help disseminate machine learning education and research. It is a free Jupyter notebook environment that requires no setup and runs entirely in the cloud.
 
+4. What is Image Classification?\
+<p align="center"> 
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_2_2_1.png" width="500">
+</p>
+Image classification is the task of taking an input image and outputting a class (a cat, dog, etc) or a probability of classes that best describes the image. For humans, this task of recognition is one of the first skills we learn from the moment we are born and is one that comes naturally and effortlessly as adults. Without even thinking twice, we’re able to quickly and seamlessly identify the environment we are in as well as the objects that surround us. When we see an image or just when we look at the world around us, most of the time we are able to immediately characterize the scene and give each object a label, all without even consciously noticing. These skills of being able to quickly recognize patterns, generalize from prior knowledge, and adapt to different image environments are ones that we do not share with our fellow machines. [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
+
 #### 0.2 Initial Setup
 
 Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
@@ -82,13 +88,15 @@ The /complete folder contains complete codes for this project, including extract
   /util.py
 ```
 
-This /start folder contains the incomplete codes for the purpose of this workshop. Now, let's start by opening the Train_Model.py file with colaboratory.
+This /start folder contains the incomplete codes for the purpose of this workshop. 
 
 ```
 /start
   /Train_Model.py
   /Predict.py
 ```
+
+Now, let's start by opening the Train_Model.py file: Right click Train_Model.py file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center"> 
 <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2.png" width="600">
@@ -103,17 +111,17 @@ Apart from saving us trouble in setting up environments, Colab also provides fre
 Select "Runtime," "Change runtime type,".
 
 <p align="center"> 
-<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_a.png" width="600">
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_a.png" width="500">
 </p>
 
 On this pop-up, select GPU.
 <p align="center"> 
-<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_b.png" width="600">
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_b.png" width="500">
 </p>
 
 Ensure "Hardware accelerator" is set to GPU (the default is CPU). Afterward, ensure that you are connected to the runtime (there is a green check next to "connected" in the menu ribbon).
 <p align="center"> 
-<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_c.png" width="600">
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_c.png" width="500">
 </p>
 
 To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code.
@@ -131,7 +139,7 @@ And there you go. This allows you to access a free GPU for up to 12 hours at a t
 
 Alternatively, supply and demand issues may lead to this:
 <p align="center"> 
-<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="600">
+<img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
 </p>
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
 
@@ -210,11 +218,7 @@ image_path_val = os.path.join(data_path, 'validation')
 <!-- TODO: image augmentation -->
 
 ```python
-# TASK 2.1: Create ImageDataGenerator
-# This is the augmentation configuration we will use for training.
-
-from keras.preprocessing.image import ImageDataGenerator
-
+# TASK 2.1 : Add augmentation configuration for the data generator of train data only
 datagen_train =  ImageDataGenerator(
     rescale=1. / 255,
     rotation_range=30,
@@ -222,18 +226,37 @@ datagen_train =  ImageDataGenerator(
     height_shift_range=0.2,
     zoom_range=0.2,
     horizontal_flip=True)
-datagen_val = ImageDataGenerator(
-    rescale=1. / 255)
 ```
 
 #### 2.2 Generate Image Data from Directory
+<!-- TODO: IM_WIDTH, IM_HEIGHT -->
 <!-- TODO: batch_size -->
 <!-- TODO: class_mode -->
+
+Now, let's configure the data setting. 
+1. As all images from our data set has different resolution and pixels, we need to standardize the image size when feeding our model. Here we put the image size as a square of 150 * 150.
+
+
+
+Here we also need to explain on the concept of epoch, batch size and iteration:
+- one epoch = one forward pass and one backward pass of all the training samples.
+- batch size = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. Ideally, you would want to use all the training samples to calculate the gradients for every single update, however that is not efficient. The higher the batch size, the more memory space you'll need. The batch size will simplify the process of updating the parameters. Usually, a batch size of 64, 128 and 256 are used.
+- number of iterations = number of passes. Wach pass using the batch size number of examples. One pass = one forward pass + one backward pass.
+For instance, here we have 4000 training samples and we set the batch_size equal to 50. The first 50 samples (from 1st to 50) from the training dataset will be used to train the network. Then it takes second 50 samples (from 51st to 100th) and train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 iterations for each epoch.
 
 ```python
 # TASK 2.2.1: Configure data setting
 IM_WIDTH, IM_HEIGHT = 150, 150
-BATCH_SIZE = 32
+BATCH_SIZE = 50
+```
+Then, running the code below will let you see the class indices of the data generator.
+```python
+print('Class Indices : {}'.format(train_data.class_indices))
+```
+
+The results below shows that c
+```
+Class Indices : {'cat': 0, 'dog': 1}
 ```
 
 Use .flow_from_directory() to generate batches of image data (and their labels) directly from our jpgs in their respective folders.
