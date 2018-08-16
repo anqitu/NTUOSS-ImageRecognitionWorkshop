@@ -159,7 +159,7 @@ print("Done!")
 
 
 print("{:<10} Start checking images".format('[INFO]'))
-for image_path in [image_path_train, image_path_val]:
+for image_path in [image_path_train, image_path_val, image_path_test]:
 	for cate_folder in get_subfolder_paths(image_path):
 		check_image(cate_folder)
 print("{:<10} Finished checking images".format('[INFO]'))
