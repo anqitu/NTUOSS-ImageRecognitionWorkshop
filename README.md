@@ -81,8 +81,7 @@ The /complete folder contains complete codes for this project, including extract
   /1a_Image_Downloader.py
   /1a_Image_Downloader.py
   /1b_Move_Kaggle_Images_To_Subfolder.py
-  /3_TestModel.py
-  /4_Recognize_Image.py
+  /
   /util.py
 ```
 
