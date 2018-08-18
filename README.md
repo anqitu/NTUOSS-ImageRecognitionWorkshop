@@ -36,7 +36,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 4. What is Image Classification? [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)\
 Image classification is the task of taking an input image and outputting a class (a cat, dog, etc) or a probability of classes that best describes the image. When a computer sees an image (takes an image as input), it will see an array of pixel values.\
-[screenshots/task_0_1.png](screenshots/task_0_1.png)\
+![screenshots/task_0_1.png](screenshots/task_0_1.png)\
 Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The  array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
 The idea of image classification is that, you give the computer this array of numbers, then it will output numbers that describe the probability of the image being a certain class (eg. .80 for cat, .2 for dog).
 
@@ -95,7 +95,7 @@ This /start folder contains the incomplete codes for the purpose of this worksho
 
 Now, let's start by opening the Train_Model.py file: Right click Train_Model.py file -> Select 'Open with' -> Select 'Colaboratory'.
 
-[screenshots/task_0_2.png](screenshots/task_0_2.png)
+![screenshots/task_0_2.png](screenshots/task_0_2.png)
 
 
 ## Task 1 - Virtual Environment
@@ -106,12 +106,12 @@ Apart from saving us trouble in setting up environments, Colab also provides fre
 
 Select "Runtime," "Change runtime type,".
 
-[screenshots/task_1_1_a.png](screenshots/task_1_1_a.png)
+![screenshots/task_1_1_a.png](screenshots/task_1_1_a.png)
 
 
 On this pop-up, select GPU.
 
-[screenshots/task_1_1_b.png](screenshots/task_1_1_b.png)
+![screenshots/task_1_1_b.png](screenshots/task_1_1_b.png)
 
 Ensure "Hardware accelerator" is set to GPU (the default is CPU). Afterward, ensure that you are connected to the runtime (there is a green check next to "connected" in the menu ribbon).
 
@@ -132,7 +132,7 @@ And there you go. This allows you to access a free GPU for up to 12 hours at a t
 
 Alternatively, supply and demand issues may lead to this:
 
-[screenshots/task_1_1_d.png](screenshots/task_1_1_d.png)
+![screenshots/task_1_1_d.png](screenshots/task_1_1_d.png){:height="36px" width="36px"}
 
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
 
