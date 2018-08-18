@@ -165,7 +165,7 @@ vcode = getpass.getpass()
 At this step you will be asked two times to authenticate the access to your drive, at each step a token will be generated:
 - Click on the link to log into your google account.
 - Allow access to your drive.
-- Copy the token (The token looks like this - 4/PABmEY7BRPd3jPR9BI9I4R99gc9QITTYFUVDU76VR) Press Enter
+- Copy the token (The token looks like this - 4/PABmEY7BRPd3jPR9BI9I4R99gc9QITTYFUVDU76VR)
 - Switch to the notebook to paste the token in the 'Enter verification code' bar.
 - Press 'Enter'
 
@@ -175,6 +175,10 @@ And then you can finally mount your google drive.
 !mkdir -p drive
 !google-drive-ocamlfuse drive
 !ls
+```
+
+```
+adc.json  datalab  drive  sample_data
 ```
 
 You should see a /drive folder inside the current working directory. Running the code below should let you see the folders inside your google drive.
@@ -187,9 +191,17 @@ Then, access out working directory /drive/NTUOSS-ImageRecognitionWorkshop. Runni
 !ls drive/NTUOSS-ImageRecognitionWorkshop
 ```
 
+```
+cnn_model_advanced.h5  cnn_model_basic.h5  data
+```
+
 Lastly, check the /data directory.
 ```python
 !ls drive/NTUOSS-ImageRecognitionWorkshop/data
+```
+
+```
+model  test  train  urls  validation
 ```
 
 
@@ -214,16 +226,16 @@ Now, let's create the data generator generators which use .flow_from_directory()
 
 Also it is time to put some additional parameters, like class_mode, target_size and batch_size.
 - **directory**: Path to the target directory. It should contain one subdirectory per class
-- **target_size**: As all images from our data set has different resolution and pixels, we need to standardize the image size when feeding our model. The target_size is the size of your input images, every image will be resized to this size.
-- **class_mode**: Set as binary since the model is trained to classify whether the image is a cat a dog, which is a yes/no question. If the model is trained on classifying more than 2 categories, the class mode should be set to 'categorical'.
-- **shuffle**: Whether to shuffle the data. Set True if you want to shuffle the order of the image that is being yielded, else set False.
-- **batch_size**: Here we also need to explain on the concept of epoch, batch size and iteration:\
+- **target_size = (150, 150)**: As all images from our data set has different resolution and pixels, we need to standardize the image size when feeding our model. It must in a [tuple](https://www.tutorialspoint.com/python/python_tuples.htm) (a python structure that is a comma-separated value between parentheses). Here we set it as (150, 150).
+- **class_mode = 'binary'**: Set as binary since the model is trained to classify whether the image is a cat a dog, which is a yes/no question. If the model is trained on classifying more than 2 categories, the class mode should be set to 'categorical'.
+- **shuffle = True**: Whether to shuffle the data. Set True if you want to shuffle the order of the image that is being yielded, else set False.
+- **batch_size = 50**: Here we also need to explain on the concept of epoch, batch size and iteration:\
 `one epoch` = one forward pass and one backward pass of all the training samples.\
 `batch size` = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. (Ideally, you would want to use all the training samples to calculate the gradients for every single update, however that is not efficient. The higher the batch size, the more memory space you'll need. The batch size will simplify the process of updating the parameters. Usually, a batch size of 64, 128 and 256 are used.)\
 `number of iterations` = number of passes. Each pass using the batch size number of examples.\
 `One pass` = one forward pass + one backward pass.\
-For instance, here we have 4000 training samples and we set the batch_size equal to 50. The first 50 samples (from 1st to 50) from the training dataset will be used to train the network. Then it takes second 50 samples (from 51st to 100th) and train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 iterations for each epoch.
-For more details about other parameters, please check [Keras documentation](https://keras.io/preprocessing/image/)
+For instance, here we have 4000 training samples and we set the batch_size equal to 50. The first 50 samples (from 1st to 50) from the training dataset will be used to train the network. Then it takes second 50 samples (from 51st to 100th) and train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 iterations for each epoch.\
+- For more details about other parameters, please check [Keras documentation](https://keras.io/preprocessing/image/)
 
 
 ```python
@@ -378,7 +390,7 @@ _________________________________________________________________
 <!-- TODO: save model -->
 
 ```python
-# TASK 4: Train Model
+# TASK 4: Train Model [WARNING: It took me 84.95 min]
 import time
 train_start_time = time.time()
 
@@ -439,12 +451,14 @@ For your information, it took me 84.95 min to train the model. Thus, I suggest y
 The setting for test data generator is has same target_size as train generator settings, but different directory path, class mode, shuffle choice and batch_size.
 - **rescale**: For the test set, only rescale should be made because we don't want to mess with new data and just predict its class.
 - **directory**: The directory should be set to as the test data folder.
-- **class_mode**: Set this to None, to return only the images.
-- **shuffle**: Set this to False, because you will need to yield the images in order, to predict the outputs and match them with their filenames.
-- **batch_size**: For train and validation data, it was set to be 50 which divides by 2000. For test data, set this to some number that divides your total number of images in your test set exactly.\
+- **target_size = (150, 150)**: The image size is same as that used for training data.
+- **class_mode = None**: Set this to None, to return only the images.
+- **shuffle = False,**: Set this to False, because you will need to yield the images in order, to predict the outputs and match them with their filenames.
+- **batch_size = 200**: For train and validation data, it was set to be 50 which divides by 2000. For test data, set this to some number that divides your total number of images in your test set exactly.\
 Why this only for test_generator?\
 Actually, we should also set the “batch_size” in both train and validation generators to some number that divides your total number of images in your train set and valid respectively, but this doesn’t matter before because even if batch_size doesn’t match the number of samples in the train or valid sets and some images gets missed out every time we yield the images from generator, it would be sampled during the very next epoch.
-But for the test set, you should sample the images exactly once, no less or no more. To avoid confusion, here we just set it to 1 (or any number then divides the total number of test images).
+But for the test set, you should sample the images exactly once, no less or no more. To avoid confusion, here we just set it to 200 (or any number then divides the total number of test images).
+@TODO
 
 
 ```python
@@ -455,8 +469,8 @@ test_datagen = ImageDataGenerator(rescale=1. / 255)
 test_data = datagen_test.flow_from_directory (
     directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/test',
     target_size = (150, 150),
-    class_mode=None,
-    shuffle=False,
+    class_mode = None,
+    shuffle = False,
     batch_size = 200)
 ```
 
@@ -495,11 +509,8 @@ print(probabilities)
 [[0.14854874]
  [0.74102986]
  [0.64901006]
- [0.15210968]
- [0.4738573 ]
  ...
  ...
- [0.4409498 ]
  [0.9367852 ]
  [0.9622177 ]
  [0.607676  ]]
@@ -515,12 +526,8 @@ print(y_pred)
 [[False]
  [ True]
  [ True]
- [False]
- [False]
  ...
  ...
- [ True]
- [False]
  [ True]
  [ True]
  [ True]]
@@ -533,7 +540,7 @@ print(y_true)
 ```
 
 ```
-[0, 0, 0, 0, 0, 0, 0,... 1, 1, 1, 1]
+[0, 0, 0, 0,... 1, 1, 1, 1]
 ```
 
 
@@ -598,7 +605,7 @@ def preprocess_image(img, target_size):
 ```python
 # TASK 6.1.3: Define a function for processing result
 def process_result(prob):
-    return 'dog' if prob >=0.5 else 'cat'
+    return 'dog' if prob > 0.5 else 'cat'
 ```
 
 #### 6.2 Make Prediction
@@ -637,16 +644,17 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.models import Model
 ```
 
-```
-Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5
-58892288/58889256 [==============================] - 6s 0us/step
-```
 
 #### 7.2 Construct Model
 
 ```python
 # TASK 7.2.1: Load base model
 base_model = VGG16(include_top=False, weights='imagenet', input_shape=(150, 150, 3))
+```
+
+```
+Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5
+58892288/58889256 [==============================] - 6s 0us/step
 ```
 
 ```python
@@ -817,12 +825,8 @@ print(probabilities)
 [[8.9933887e-02]
  [5.1956624e-01]
  [5.7828718e-01]
- [1.5706860e-01]
- [1.7410269e-01]
  ...
  ...
- [9.3232280e-01]
- [9.6970761e-01]
  [9.9898058e-01]
  [9.9089313e-01]
  [9.9960285e-01]]
@@ -839,10 +843,8 @@ print(y_pred)
 [[False]
  [ True]
  [ True]
- [False]
  ...
  ...
- [ True]
  [ True]
  [ True]
  [ True]]
@@ -855,7 +857,7 @@ print(y_true)
 ```
 
 ```
-[0, 0, 0, 0, 0, 0, 0, 0... 1, 1, 1, 1, 1]
+[0, 0, 0, 0, 0, ... 1, 1, 1, 1, 1]
 ```
 
 ```python
