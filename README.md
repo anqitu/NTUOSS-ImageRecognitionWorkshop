@@ -115,7 +115,7 @@ On this pop-up, select GPU.
 
 Ensure "Hardware accelerator" is set to GPU (the default is CPU). Afterward, ensure that you are connected to the runtime (there is a green check next to "connected" in the menu ribbon).
 
-[screenshots/task_1_1_c.png](screenshots/task_1_1_c.png)
+![screenshots/task_1_1_c.png](screenshots/task_1_1_c.png)
 
 To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code.
 ```python
@@ -132,7 +132,7 @@ And there you go. This allows you to access a free GPU for up to 12 hours at a t
 
 Alternatively, supply and demand issues may lead to this:
 
-![screenshots/task_1_1_d.png](screenshots/task_1_1_d.png){:height="36px" width="36px"}
+![screenshots/task_1_1_d.png](screenshots/task_1_1_d.png)
 
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
 
