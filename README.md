@@ -26,9 +26,11 @@ ___
 For this tutorial, we'll be creating a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
 
 1. What is Image Recognition (or Image Classification)?\
-When a computer sees an image (takes an image as input), it will see an array of pixel values.</br></br>
-![screenshots/task_0_1.png](screenshots/task_0_1.png)\
-</br>Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The WIDTH and HEIGHT refers to the size while the 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
+When a computer sees an image (takes an image as input), it will see an array of pixel values.</br>
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_1.png" width="500">
+</p> 
+Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The WIDTH and HEIGHT refers to the size while the 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
 The idea of image classification is that, you give the computer this array of numbers, then it will output numbers that describe the probability of the image being a certain class (eg. 0.8 for cat, 0.2 for dog).
 
 2. What are [CNNs](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)?\
@@ -46,7 +48,9 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
 
-![screenshots/task_0_2_a.png](screenshots/task_0_2_a.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_a.png" width="500">
+</p>
 
 Inside the folder, you will find one data folder and one start file:
 ```
