@@ -86,7 +86,13 @@ Here are the purposes of each type of data set:
 
 This 'start' file is a Colab notebook which contains the incomplete codes for the purpose of this workshop.
 
-Now, let's open the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+As you only have 'View' access to this 'start' file, make a copy of it to save on your own drive so that you can edit it.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_copy.png">
+</p>
+
+Now, let's open the copy of the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png">
