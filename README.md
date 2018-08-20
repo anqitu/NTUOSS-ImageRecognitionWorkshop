@@ -47,7 +47,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 #### 0.2 Initial Setup
 
-Download this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) and add to your google drive
+Download and unzip this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7),  then add to your google drive.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_a.png" width="500">
