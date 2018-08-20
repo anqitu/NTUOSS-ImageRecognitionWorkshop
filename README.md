@@ -732,8 +732,8 @@ First of all, configure the backend.
 ```python
 # TASK 7.1.1 Configure backend
 from keras import backend as K
-K.set_image_data_format('channels_last')
 K.set_image_dim_ordering('tf') #channel last
+K.set_image_data_format('channels_last')
 ```
 
 Then, import necessary Keras libraries and packages. Notice that here we add a Dropout layer whose purpose is to avoid overfitting with regularization.
@@ -756,7 +756,7 @@ We break down the code by paramaters again:
 - **weights = 'imagenet'**: weights to initialize the model with. Here we set it as the weights that have been pre-trained on ImageNet dataset.
 - **input_shape = (150, 150, 3)**: image shape of our image data.
 
-Then, we add new dense and output layers on top of the base model. Different from the previous basic model, we add a dropout layer here. The dropout randomly drops a percentage of connections of neurons from the dense layer to prevent overfitting.
+Then, we add new dense and output layers on top of the base model. Different from the previous basic model, we add a dropout layer here. The dropout randomly drops 40% of connections of neurons from the dense layer to prevent overfitting.
 
 ```python
 # TASK 7.2.2: Add new layers
