@@ -88,7 +88,9 @@ This 'start' file is Colab Notebooks which contains the incomplete codes for the
 
 Now, let's open the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
-![screenshots/task_0_2_b.png](screenshots/task_0_2_b.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png" width="500">
+</p> 
 
 
 ## Task 1 - Virtual Environment
@@ -99,16 +101,24 @@ Apart from saving us trouble in setting up environments, Colab also provides fre
 
 First of all, we need to ensure our "Hardware accelerator" is set to GPU (the default is CPU): Select "Runtime," -> "Change runtime type,".
 
-![screenshots/task_1_1_a.png](screenshots/task_1_1_a.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_a.png" width="500">
+</p> 
 
 
 On this pop-up, select GPU.
 
-![screenshots/task_1_1_b.png](screenshots/task_1_1_b.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_b.png" width="500">
+</p> 
+
 
  Afterward, ensure that you are connected to the runtime (there is a green check next to "connected" in the menu ribbon).
 
-![screenshots/task_1_1_c.png](screenshots/task_1_1_c.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_c.png" width="500">
+</p> 
+
 
 To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code.
 ```python
@@ -125,7 +135,9 @@ And there you go. This allows you to access a free GPU for up to 12 hours at a t
 
 Alternatively, supply and demand issues may lead to this:
 
-![screenshots/task_1_1_d.png](screenshots/task_1_1_d.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
+</p> 
 
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
 
@@ -292,8 +304,12 @@ from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 ```
 Each of this package corresponds to a layer of the model we are going to build. Before we go into details of each part, let's look at the overall structure of a common CNN model. As shown below, a CNN takes the image, pass it through a series of convolutional, nonlinear, pooling, and fully connected layers, then get an output. Each layer contains many neurons where the computation takes place.
 
-![screenshots/task_3_1_2_a.png](screenshots/task_3_1_2_a.png)
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_a.png" width="500">
+</p> 
 [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
+
+
 
 To understand the actual math behind all the concepts, i suggest you to go learn from an external source. As this workshop concentrates more on the implementation part, I will only briefly talk about each concept.
 
@@ -301,7 +317,10 @@ Now, let us see what each of the above packages are imported for:
 
 - **Sequential**: The Sequential model is used to initialise our neural network model, so that we can add layers in this model.
 - **Conv2D**: The convolution operation is usually the first step of a CNN on the training images. This layer contains many filters each of which can be imagined as a flashlight that is shedding light upon and sliding over the image. The flashlight in this layer is looking for specific features. If they find the features they are looking for, they produce a high activation. Each filter is initialized randomly initially and will be modified during the training process. Since we are working on images here, which a basically 2D arrays, we’re using Convolution 2-D. ([Read more on Convolutional Layers](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/))</br></br>
-![screenshots/task_3_1_2_b](screenshots/task_3_1_2_b.gif)
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_b.gif" width="500">
+</p> 
 [Source](https://www.learnopencv.com/image-classification-using-convolutional-neural-networks-in-keras/)
 </br></br>The above example shows a filter of size 3 * 3, sliding over a image size of 5 * 5. Let's do a quick math: how many different locations in the image can the flashlight shed light upon? The answer is actually shown on the right side of the example, i.e 9.
 
@@ -313,8 +332,9 @@ Now, let us see what each of the above packages are imported for:
 - **Flatten**: Flattening is the process of converting all the resultant 3-D arrays into a single long continuous linear vector.
 - **Dense**: We also import Dense to perform the full connection of the neural network. A dense layer is a regular layer of neurons in a neural network. Each neuron receives input from all the neurons in the previous layer, thus densely connected. ([Read more on Neural Network](http://cs231n.github.io/neural-networks-1/))
 
-![screenshots/task_3_1_2_d](screenshots/task_3_1_2_d.png)
-
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_d.gif" width="500">
+</p> 
 
 #### 3.2 Construct Model
 
