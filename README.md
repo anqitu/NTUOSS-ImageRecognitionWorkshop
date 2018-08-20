@@ -2,7 +2,7 @@
 
 *by [Tu Anqi](https://github.com/anqitu) for NTU Open Source Society*
 
-This workshop assumes beginner-level knowledge of Python.
+This workshop assumes basic knowledge of Python.
 
 **Disclaimer:** *This document is only meant to serve as a reference for the attendees of the workshop. It does not cover all the concepts or implementation details discussed during the actual workshop.*
 ___
@@ -25,21 +25,20 @@ ___
 
 For this tutorial, we'll be creating a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
 
-1. What is Image Recognition(or Image Classification)? [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)\
-Image classification is the task of taking an input image and outputting a class (a cat, dog, etc) or a probability of classes that best describes the image.\
-When a computer sees an image (takes an image as input), it will see an array of pixel values.\
+1. What is Image Recognition (or Image Classification)?\
+When a computer sees an image (takes an image as input), it will see an array of pixel values.</br></br>
 ![screenshots/task_0_1.png](screenshots/task_0_1.png)\
-Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The WIDTH and HEIGHT refers to the size while the 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
-The idea of image classification is that, you give the computer this array of numbers, then it will output numbers that describe the probability of the image being a certain class (eg. .80 for cat, .2 for dog).
+</br>Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The WIDTH and HEIGHT refers to the size while the 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
+The idea of image classification is that, you give the computer this array of numbers, then it will output numbers that describe the probability of the image being a certain class (eg. 0.8 for cat, 0.2 for dog).
 
 2. What are [CNNs](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)?\
-Convolutional Neural Networks (CNNs or ConvNets) are a category of [Neural Networks](https://ujjwalkarn.me/2016/08/09/quick-intro-neural-networks/) that have proven very effective in areas such as image recognition and classification. CNNs have been successful in identifying faces, objects and traffic signs apart from powering vision in robots and self driving cars.
+Convolutional Neural Networks (CNNs or ConvNets) are a category of [Neural Networks](https://ujjwalkarn.me/2016/08/09/quick-intro-neural-networks/) that are very effective in areas such as image recognition and classification. They have been successful in identifying faces, objects and traffic signs apart from powering vision in robots and self driving cars.
 
 3. What is [Keras](https://keras.io/)?\
 Keras is an open source neural network library written in Python. It was developed with a focus on enabling fast experimentation.
 
 4. What is [Colaboratory](https://colab.research.google.com/notebooks/welcome.ipynb)?\
-Colaboratory is a Google research project created to help disseminate machine learning education and research. It is a free Jupyter notebook environment that requires no setup and runs entirely in the cloud.
+Colaboratory is a Google research project created to help disseminate machine learning education and research. It is a free Jupyter notebook environment that requires no setup and runs entirely in a virtual machine (VM) hosted in the cloud.
 
 
 
@@ -49,14 +48,14 @@ Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20
 
 ![screenshots/task_0_2_a.png](screenshots/task_0_2_a.png)
 
-Inside the folder, you will find 3 folders:
+Inside the folder, you will find one data folder and one start file:
 ```
 /NTUOSS-ImageRecognitionWorkshop
   /data
   /start
 ```
 
-In the /data folder, there are train, test and validation image folders, with the data distribution shown as below. To allow Keras to use its special API to handle the data downloads directly from the folder, the tructure of the project folder must be as following.
+In the /data folder, there are train, test and validation image folders, with the data distribution shown as below. To allow Keras to use its special API to handle the data downloads directly from the folder, the tructure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop.
 
 ```
 /data
@@ -69,18 +68,20 @@ In the /data folder, there are train, test and validation image folders, with th
   /test
     /cat: 100
     /dog: 100
+  /model
+    /cnn_model_basic.h5
+    /cnn_model_advanced.h5
 ```
 Here are the purposes of each type of data set:
-- Train: The model is initially fit on a training dataset, which is a set of examples used to fit the parameters of the model (e.g. weights of connections between neurons in neural networks). The training dataset often consists of pairs of an input vector and the corresponding target. In our case, each image is an input vector, while the image's label (dog or cat) is a target.
+- **Train**: The model is initially fit on a training dataset, which is a set of examples used to fit the parameters of the model (e.g. weights of connections between neurons in neural networks). The training dataset often consists of pairs of an input vector and the corresponding target. In our case, each image is an input vector, while the image's label (dog or cat) is a target.
 
-- Validation: Then, the fitted model is used to predict the responses for the observations in the validation dataset. The validation dataset provides an unbiased evaluation of the fitted model. It can be used for regularization by early stopping: stop training when the error on the validation dataset increases, as this is a sign of overfitting to the training dataset.
+- **Validation**: The validation dataset provides an unbiased evaluation of the fitted model. It can be used for regularization by early stopping: stop training when the error on the validation dataset increases, as this is a sign of overfitting to the training dataset.
 
-- Test: Finally, the test dataset is a dataset used to provide an unbiased evaluation of a final model fit on the training dataset.
-
+- **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
 This 'start' file is Colab Notebooks which contains the incomplete codes for the purpose of this workshop.
 
-Now, let's start by opening the start file: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+Now, let's open the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 ![screenshots/task_0_2_b.png](screenshots/task_0_2_b.png)
 
@@ -149,14 +150,14 @@ import getpass
 vcode = getpass.getpass()
 !echo {vcode} | google-drive-ocamlfuse -headless -id={creds.client_id} -secret={creds.client_secret}
 ```
-At this step you will be asked two times to authenticate the access to your drive, at each step a token will be generated:
+You will be asked two times to authenticate the access to your drive. At each step a token will be generated:
 - Click on the link to log into your google account.
 - Allow access to your drive.
 - Copy the token (The token looks like this - 4/PABmEY7BRPd3jPR9BI9I4R99gc9QITTYFUVDU76VR)
 - Switch to the notebook to paste the token in the 'Enter verification code' bar.
 - Press 'Enter'
 
-And then you can finally mount your google drive.
+And then you can mount your google drive in your current virtual machine.
 ```python
 # TASK 1.2.3: Mount Google Drive in local Colab VM
 !mkdir -p drive
@@ -174,13 +175,9 @@ Running the code below should let you see the folders inside your google drive.
 !ls drive
 ```
 
-Then, access our working directory /drive/NTUOSS-ImageRecognitionWorkshop bu running the code below.
+Then, access our working directory /drive/NTUOSS-ImageRecognitionWorkshop by running the code below.
 ```python
 !ls drive/NTUOSS-ImageRecognitionWorkshop
-```
-
-```
-cnn_model_advanced.h5  cnn_model_basic.h5  data
 ```
 
 Lastly, check the /data directory.
@@ -188,25 +185,21 @@ Lastly, check the /data directory.
 !ls drive/NTUOSS-ImageRecognitionWorkshop/data
 ```
 
-```
-model  test  train  urls  validation
-```
-
 
 ## Task 2 - Preprocess Images
 
 #### 2.1 Configure Image Augmentation
 <!-- TODO: image augmentation -->
-As we only have 2000 training images for each class, this is definitely quite few for the model to learn enough patterns and recognize accurately. One way to make our existing dataset even larger, is just some easy transformations. As previously mentioned, when a computer takes an image as an input, it will take in an array of pixel values. Imagine that the whole image is shifted left by 1 pixel. For us, this change is imperceptible. However, for a computer, this shift can be indeed very significant. Approaches that alter the training data in ways that change the array representation while keeping the label the same are known as **data augmentation**. It allows us to artificially expand our dataset. Some popular augmentations are horizontal flips, random crops, translations, rotations, and so on. By applying just a couple of these transformations to our training data, we can easily enlarge our data set.
+As we only have 2000 training images for each class, this is considered definitely quite few for the model to learn enough patterns and recognize images accurately. (For example, [VGG16](https://arxiv.org/abs/1409.1556) is a convolutional neural network model trained on 14 million images to recognize an image as one of 1000 categories with an accuracy of 92.5%.) One way to enlarge our existing dataset is some easy transformations. As previously mentioned, when a computer takes an image as an input, it will take in an array of pixel values. Imagine that the whole image is shifted left by 1 pixel. For us, this change is imperceptible. However, for a computer, this shift can be indeed very significant. Approaches that alter the training data in ways that change the array representation while keeping the label the same are known as **data augmentation**. It allows us to artificially expand our dataset. Some popular augmentations are horizontal flips, random crops, translations, rotations, and so on. By applying just a couple of these transformations to our training data, we can easily enlarge our data set.
 
-Here we add some data augmentation parameters for the image data generator.
-- **rescale = 1. / 255**: Rescaling factor. The parameter rescale is to multiply every pixel in the preprocessing image. As mentioned earlier, each digital colorful image contains three maps of pixels: Red, Green and Blue, and all the pixels are in the range 0~255. Since 255 is the maximin pixel value. Rescale 1./255 is to transform every pixel value from range [0,255] -> [0,1]. The benefit of such a rescaling is that it makes the model treat all images in the same manner. Unavoidably, some images have high pixel range, while some have low pixel range. Since the images are all sharing the same model, weights and learning rate, the high range images tends to create stronger loss while low range ones create weak loss. Scaling every images to the same range [0,1] will make images contributes more evenly to the total loss.
+Here we import the [```ImageDataGenerator```](https://keras.io/preprocessing/image/) from Keras libraries and add some data augmentation parameters for the image data generator.
+- **rescale = 1. / 255**: Rescaling factor. The factor to multiply every pixel in the preprocessing image. As mentioned earlier, each digital colorful image contains three maps of pixels: Red, Green and Blue, and all the pixels are in the range 0~255. Since 255 is the maximin pixel value. Rescale 1./255 is to transform every pixel value from range [0,255] -> [0,1]. The benefit of such a rescaling is that it makes the model treat all images (regardless with high or low pixel range) in the same manner.
 - **rotation_range = 30**: Int. Degree range for random rotations
 - **width_shift_range = 0.2**: Float Fraction range of total width for shifting.
 - **height_shift_range = 0.2**: Float. Fraction range of total heighth for shifting.
 - **zoom_range = 0.2**: Float. Fraction range for random zoom.
 - **horizontal_flip = True**: Boolean. Randomly flip inputs horizontally.
-- For more details about other parameters, please check [Keras documentation](https://keras.io/preprocessing/image/)
+
 ```python
 # TASK 2.1 : Add augmentation configuration for the data generator of train data only
 datagen_train =  ImageDataGenerator(
@@ -219,19 +212,18 @@ datagen_train =  ImageDataGenerator(
 ```
 
 #### 2.2 Generate Image Data from Directory
-Now, let's create the data generator which use .flow_from_directory() to generate batches of image data (and their labels) directly from our jpgs in their respective folders. This is another great API provided by Keras which saves us efforts in converting images to pixel arrays before feeding our model.
+Now, let's use [```.flow_from_directory```](https://keras.io/preprocessing/image/) to generate batches of image data (and their labels) directly from our jpgs in their respective folders. This is another great API provided by Keras which saves us efforts in converting images to pixel arrays before feeding our model.
 
 Also it is time to put some additional parameters, like class_mode, target_size and batch_size.
 - **directory**: Path to the target directory. It should contain one subdirectory per class
-- **target_size = (150, 150)**: As all images from our data set has different resolution and pixels, we need to standardize the image size when feeding our model. It must in a [tuple](https://www.tutorialspoint.com/python/python_tuples.htm) (a python structure that is a comma-separated value between parentheses). Here we set it as (150, 150).
-- **class_mode = 'binary'**: Set as binary since the model is trained to classify whether the image is a cat a dog, which is a yes/no question. If the model is trained on classifying more than 2 categories, the class mode should be set to 'categorical'.
+- **target_size = (150, 150)**: Size of image to be fed to our model. As all images from our data set has different resolution, we need to standardize their size before feeding our model. It must in a [tuple](https://www.tutorialspoint.com/python/python_tuples.htm). Here we set it as (150, 150).
+- **class_mode = 'binary'**: Mode of class. Set as binary since the model is trained to classify whether the image is a cat a dog, which is a yes/no question. If the model is trained on classifying more than 2 categories, the class mode should be set to 'categorical'.
 - **shuffle = True**: Whether to shuffle the data. Set True if you want to shuffle the order of the image that is being yielded, else set False.
-- **batch_size = 50**: Here we also need to explain on the concept of epoch and batch size:\
+- **batch_size = 50**: Number of images in one batch of data. Here we need to explain a bit on the concept of epoch and batch size:\
 `one epoch` = one forward pass and one backward pass of all the training samples.\
-`batch size` = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. Ideally, we would want to use all the training samples to calculate the gradients for every single update, however that is not efficient. The higher the batch size, the more memory space we'll need. One strategy is the split the data into batches and fit them one by one to the model to update the parameters.\
+`batch size` = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. Ideally, we would want to use all the training samples to calculate the gradients for every single update, but that is not efficient. Also, the higher the batch size, the more memory space we'll need. One strategy is to split the data into batches and fit them one by one to the model to update the parameters.\
 `One pass` = one forward pass + one backward pass.\
-For instance, here we have 4000 training samples and we set the batch_size equal to 50. The first 50 samples (from 1st to 50) from the training dataset will be used to train the network. Then it takes second 50 samples (from 51st to 100th) and train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 batches for each epoch. We select 50 here because it divides 2000.
-- For more details about other parameters, please check [Keras documentation](https://keras.io/preprocessing/image/)
+For instance, here we have 4000 training samples and we set the batch_size as 50. The first 50 samples from the training dataset will be used to train the network. Then it takes second 50 samples to train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 batches for each epoch. We select 50 here because it divides 2000.
 
 
 ```python
@@ -240,13 +232,13 @@ train_data = datagen_train.flow_from_directory(
     directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/train',
     target_size = (150, 150),
     class_mode = 'binary',
-    shuffle=True,
+    shuffle = True,
     batch_size = 50)
 validation_data = datagen_val.flow_from_directory(
     directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/validation',
     target_size = (150, 150),
     class_mode = 'binary',
-    shuffle=True,
+    shuffle = True,
     batch_size = 50)
 ```
 
@@ -266,7 +258,7 @@ You will see the response as below.
 ```
 Class Indices : {'cat': 0, 'dog': 1}
 ```
-This class indices imply that, ideally, the model will predict the image as 0 if it is cat, and predict the image as 1 if it is a dog. However, the model will only be able to predict the probability of whether the image is a cat or a dog. Thus, the closer the probability to 0, the higher the confidence that the image is a cat. The closer the probability to 1, the higher the confidence that the image is a dog. For example, a probability of 0.8 indicates a dog, while a probability of 0.2 indicates a cat.
+This class indices imply that, ideally, the model will predict the image as 0 if it is cat, and predict the image as 1 if it is a dog. However, the model will only be able to predict the probability of whether the image is a cat or a dog. Thus, the closer the probability is to 0, the higher the confidence that the image is a cat. The closer the probability is to 1, the higher the confidence that the image is a dog. For example, a probability of 0.8 indicates a dog, while a probability of 0.2 indicates a cat.
 
 
 ## Task 3 - Build Basic Model
@@ -274,56 +266,58 @@ This class indices imply that, ideally, the model will predict the image as 0 if
 #### 3.1 Set up backend and Import libraries
 <!-- TODO: backend -->
 
-Keras is a model-level library that provides high-level building blocks for developing deep learning models. It does not handle itself low-level operations such as tensor products, convolutions and so on. Instead, it relies on a specialized, well-optimized tensor manipulation library to do so, serving as the "backend engine" of Keras. Several different backend engines can be plugged seamlessly into Keras. For this workshop, we will use TensorFlow as the backend, which is an open-source framework developed by Google. For 2D data (e.g. image), "channels_last" assumes (rows, cols, channels or 150, 150, 3) while "channels_first" assumes  (channels, rows, cols or 3, 150, 150). We also sets the value of the image dimension ordering convention to 'tf' (stands for tensorflow) which uses 'channel last' so that it complies with our image data format.
+Keras is a model-level library that provides high-level building blocks for developing deep learning models. Instead of handling itself low-level operations such as tensor products, convolutions and so on, it relies on other specialized libraries to do so. Several different backend engines can be plugged seamlessly into Keras.
+
+For this workshop, we will use [TensorFlow](https://www.tensorflow.org/) as the backend, which is an open-source framework developed by Google. Here, we set the value of the image dimension ordering to 'tf' (stands for tensorflow) which uses 'channels_last'. For 2D data (e.g. image), "channels_last" assumes (rows, cols, channels) while "channels_first" assumes  (channels, rows, cols). Thus, we will also need to set the image data format as 'chennels_last' so that it complies with our image data format.
 
 ```python
 # TASK 3.1.1 Configure backend
 from keras import backend as K
-K.set_image_data_format('channels_last')
 K.set_image_dim_ordering('tf') #channel last
+K.set_image_data_format('channels_last')
 ```
 
-Next, let us import all the required keras packages used to build our CNN
+
+Next, let us import all the required keras packages used to build our CNN.
 
 ```python
 # TASK 3.1.2 Import the Keras libraries and packages
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 ```
-Wondering what is each package used for? Each of them corresponds to a part of the model we are going to build.
-
-Before we go into details of each part, let's look at the overall structure of a common CNN model. A CNN takes the image, pass it through a series of convolutional, nonlinear, pooling, and fully connected layers, then get an output.
+Each of this package corresponds to a layer of the model we are going to build. Before we go into details of each part, let's look at the overall structure of a common CNN model. As shown below, a CNN takes the image, pass it through a series of convolutional, nonlinear, pooling, and fully connected layers, then get an output. Each layer contains many neurons where the computation takes place.
 
 ![screenshots/task_3_1_2_a.png](screenshots/task_3_1_2_a.png)
 [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
 
-To understand the actual math behind all the concepts, i suggest you to go learn from an external source (as I have recommended at the end). As this workshop concentrates more on the implementation part, I will only briefly talk about each part.
+To understand the actual math behind all the concepts, i suggest you to go learn from an external source. As this workshop concentrates more on the implementation part, I will only briefly talk about each concept.
 
 Now, let us see what each of the above packages are imported for:
 
 - **Sequential**: The Sequential model is used to initialise our neural network model, so that we can add layers in this model.
-- **Conv2D**: The convolution operation is usually the first step of a CNN, on the training images. Another way is to imagine each neuron as a flashlight that is shedding light upon and sliding over the image. The flashlight in this layer is looking for specific features. If they find the features they are looking for, they produce a high activation. Since we are working on images here, which a basically 2 Dimensional arrays, we’re using Convolution 2-D. ([Read more on Convolutional Layers](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/))</br></br>
+- **Conv2D**: The convolution operation is usually the first step of a CNN on the training images. This layer contains many filters each of which can be imagined as a flashlight that is shedding light upon and sliding over the image. The flashlight in this layer is looking for specific features. If they find the features they are looking for, they produce a high activation. Each filter is initialized randomly initially and will be modified during the training process. Since we are working on images here, which a basically 2D arrays, we’re using Convolution 2-D. ([Read more on Convolutional Layers](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/))</br></br>
 ![screenshots/task_3_1_2_b](screenshots/task_3_1_2_b.gif)
 [Source](https://www.learnopencv.com/image-classification-using-convolutional-neural-networks-in-keras/)
-</br></br>The above example shows a filter of size 3 * 3, sliding over a image size of 5 * 5. Let's do a quick math: how many different locations in the image can the flashlight shed light upon? The answer is actually shown in the example, i.e 9 (3 * 3).
+</br></br>The above example shows a filter of size 3 * 3, sliding over a image size of 5 * 5. Let's do a quick math: how many different locations in the image can the flashlight shed light upon? The answer is actually shown on the right side of the example, i.e 9.
 
-- **MaxPooling2D**: We’ve imported MaxPooling2D from keras.layers, which is used for pooling operation. Pooling layer is mostly used immediately after the convolutional layer to reduce the spatial size (only width and height, not depth). This reduces the number of parameters, hence reducing the computation and avoiding overfitting. ([Read more on Pooling Layers](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/))</br></br>
+- **MaxPooling2D**: MaxPooling2D is used for pooling operation. Pooling layer is mostly used immediately after the convolutional layer to reduce the spatial size (only width and height, not depth). This reduces the number of parameters, hence reducing the computation and avoiding overfitting. ([Read more on Pooling Layers](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/))</br></br>
 ![screenshots/task_3_1_2_c](screenshots/task_3_1_2_c.png)
 [Source](https://medium.com/@tifa2up/image-classification-using-deep-neural-networks-a-beginner-friendly-approach-using-tensorflow-94b0a090ccd4)
 </br></br>The above exmaple shows a max pool layer with filter size 2×2 and stride 2. The output is the max value in a 2×2 region shown using encircled digits. The stride is the pixel step by which we slide the filter. When the stride is 2, the filters jump 2 pixels at a time. This max pool layer reduces the number of parameters by half.
 
 - **Flatten**: Flattening is the process of converting all the resultant 3-D arrays into a single long continuous linear vector.
-- **Dense**: We also import Dense to perform the full connection of the neural network. A dense layer is just a regular layer of neurons in a neural network. Each neuron receives input from all the neurons in the previous layer, thus densely connected. ([Read more on Neural Network](http://cs231n.github.io/neural-networks-1/))
+- **Dense**: We also import Dense to perform the full connection of the neural network. A dense layer is a regular layer of neurons in a neural network. Each neuron receives input from all the neurons in the previous layer, thus densely connected. ([Read more on Neural Network](http://cs231n.github.io/neural-networks-1/))
 
 ![screenshots/task_3_1_2_d](screenshots/task_3_1_2_d.png)
 
 
 #### 3.2 Construct Model
 
-Now, let's build our first model, a simple stack of 3 convolution layers with a ReLU activation and followed by max-pooling layers
+Now, let's build our first model, a simple stack of 3 convolution layers with a ReLU activation and followed by max-pooling layers.
 
+Firstly, initialize the model as a sequential constructor to which we can pass a list of layer instances.
 ```python
-# TASK 3.2.1 Initialise Neural Network Model
+# TASK 3.2.1 Initialize Neural Network Model
 model = Sequential()
 ```
 
@@ -336,16 +330,16 @@ model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (74, 74, 32)
 ```
 
 Let’s break down the above code parameter by parameter. We take the sequential model object, then add a convolution layer by using the “Conv2D” function. The Conv2D function is taking 4 arguments:
-- the first is the number of filters i.e 32
-- the second argument is the size of each filter i.e 3x3
-- the third is the activation function to be used i.e ‘relu’. ReLU (Rectified Linear Units) is an the activation layer that introduces nonlinearity to a system. ([Read more on ReLU](http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf))
+- the number of filters i.e 32
+- the size of each filter i.e 3x3
+- the activation function to be used i.e ‘relu’. ReLU (Rectified Linear Units) is an the activation layer that introduces nonlinearity to a system. ([Read more on ReLU](http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf))
 
-- the fourth argument is the input shape. We only need to specify the input shape for the first layer. Since, we’re using the TensorFlow backend, we arrange the input shape with “channels last” data ordering. The height and width should also corresponds to the image size we set for the data generator earlier, which is (150, 150).
+- the input shape. We only need to specify the input shape for the first layer. Since, we’re using the TensorFlow backend, we arrange the input shape with “channels last” data ordering. The height and width should also corresponds to the image size we set for the data generator, which is (150, 150, 3).
 
-The output shape after the first convolutional layer will be (148, 148, 32). ***Think about why***
+The output shape after the first convolutional layer will be (148, 148, 32). *Think about why*
 
 
-Then we have a MaxPooling layer of size (2*2) to reduce the total number of nodes for the upcoming layers. When not specifies, the stride is set as the value of the MaxPooling layer size - 2. The output shape will be (74, 74, 32). ***Think about why***
+Then we have a MaxPooling layer of size (2*2) to reduce the total number of nodes for the upcoming layers. When not specified, the stride is set as the value of the MaxPooling layer size i.e 2. The output shape of this layer will be (74, 74, 32). *Think about why*
 
 Next, we add the second set of CONV -> RELU -> POOL layers
 
@@ -356,9 +350,9 @@ model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (36, 36, 64)
 ```
 Notice here we do not need to specify the input shape any more.
 
-The output shape after the convolutional layer will be (72, 72, 64). ***Think about why***
+The output shape after the convolutional layer will be (72, 72, 64). *Think about why*
 
-The output shape after the MaxPooling layer will be (36, 36, 64). ***Think about why***
+The output shape after the MaxPooling layer will be (36, 36, 64). *Think about why*
 
 Then, we add the third set of CONV -> RELU -> POOL layers
 
@@ -368,19 +362,19 @@ model.add(Conv2D(64, (3, 3), activation='relu')) # output shape = (34, 34, 64)
 model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (17, 17, 64)
 ```
 
-The output shape after the convolutional layer will be (34, 34, 64). ***Think about why***
+The output shape after the convolutional layer will be (34, 34, 64). *Think about why*
 
-The output shape after the MaxPooling layer will be (17, 17, 64). ***Think about why***
+The output shape after the MaxPooling layer will be (17, 17, 64). *Think about why*
 
-Now, it’s time for us to now convert all the pooled images into a continuous vector through Flattening. Flattening takes the 3D array, i.e pooled image pixels, and converting them to a 1D single vector.
+Now, it’s time for us to convert all the pooled images into a continuous vector through Flattening. Flattening takes the 3D array, i.e pooled image pixels, and converts them to a 1D single vector.
 
 ```python
 # TASK 3.2.5 Convert the 3D feature arrays to 1D vector
 model.add(Flatten()) # output shape = (18496,)
 ```
-The output shape after flattening would be (18496,). ***Think about why***
+The output shape after flattening would be (18496,). *Think about why*
 
-After flattening, we need to create a fully connected layer to which we connect the set of nodes we got after the flattening step. As this layer will be present between the input layer and output layer, we can refer to it a hidden layer.
+After flattening, we need to create a fully connected layer to which we connect the set of nodes we got after the flattening step. As this layer is present between the input layer and output layer, we can refer to it a hidden layer.
 
 ```python
 # TASK 3.2.6 Add the connection layer
@@ -390,7 +384,7 @@ model.add(Dense(units = 256, activation='relu'))
 Dense is the function to add a fully connected layer, ‘units’ is where we define the number of nodes that should be present in this hidden layer. It always required many experimental tries to choose the most optimal number of nodes.
 
 
-Lastly, we add the output layer. The number here indicates the shape of output layer. The output layer should contain only one node, as it is binary classification. A sigmoid activation is perfect for a binary classification as it restrict the results between 0 and 1. This single node will give us a binary output of either a Cat or Dog.
+Then, we add the output layer. The number here indicates the shape of output layer. The output layer should contain only one node, as it is binary classification. A sigmoid activation is perfect for a binary classification as it restricts the results between 0 and 1. This single node will give us a binary output of either a Cat or Dog.
 
 ```python
 # TASK 3.2.7 Add the output layer
@@ -402,11 +396,11 @@ Lastly, compile the model.
 
 ```python
 # TASK 3.2.8 Compile the model
-model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+model.compile(loss = 'binary_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
 ```
-Let us break down the funtion by parameter again:
-- **loss**: The function to compute an error value to represent the difference between the actual output and the predicted output. During our training of the model, we will attempt to wither minimize or maximize the value. ```binary_crossentropy``` is usually used for a binary problem. ([Ream more on Cross Entropy](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/))
-- **optimizer**: The function used to update the weights and bias i.e. the internal parameters of a model in such a way that the error computed by the loss function is minimized. ([Read more on Optimizer](https://medium.com/data-science-group-iitr/loss-functions-and-optimization-algorithms-demystified-bb92daff331c))([Read more on RMSProp](https://medium.com/100-days-of-algorithms/day-69-rmsprop-7a88d475003b))
+Let us break down the function parameter by parameter again:
+- **loss**: The function to compute an error value to represent the difference between the actual output and the predicted output. During our training of the model, we will attempt to either minimize or maximize the value. ```binary_crossentropy``` is usually used for a binary problem. ([Ream more on Cross Entropy](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/))
+- **optimizer**: The function used to update the weights and bias (i.e. the internal parameters of a model) in such a way that the error computed by the loss function is minimized. ([Read more on Optimizer](https://medium.com/data-science-group-iitr/loss-functions-and-optimization-algorithms-demystified-bb92daff331c)) ([Read more on RMSProp](https://medium.com/100-days-of-algorithms/day-69-rmsprop-7a88d475003b))
 - **metrics**: List of metrics to be evaluated by the model during training and testing. ```accuracy``` means the percentage of correct answers. Metric values are recorded at the end of each epoch on the training dataset.
 
 #### 3.3 Check Model
@@ -445,7 +439,7 @@ _________________________________________________________________
 ```
 
 ## Task 4 - Train Model
-Finally, it’s time to fit our CNN model to the image dataset that we have preprocessed. As we used a data generator for feeding training image data, we will use .fit_generator when fitting the model to the data. Otherwise, .fit will be used if the training data is preprocessed arrays of number.
+Finally, it’s time to fit our CNN model to the image dataset that we have preprocessed. As we used a data generator for preparing our training image data, we will use ```.fit_generator``` when fitting the model to the data. Otherwise, ```.fit``` will be used if the training data is preprocessed arrays of number.
 ```python
 # TASK 4: Train Model [WARNING: It took me 84.95 min to complete the training process]
 import time
@@ -591,9 +585,9 @@ print(y_pred)
 [0, 1, 1, 0, ... 0, 1, 1, 1]
 ```
 
-Then, we need to prepare the true list of class result using the class referred from filenames.
+Then, we need to prepare the actual list of class result using the class referred from filenames.
 ```python
-# TASK 5.3.3: Prepare true result using filenames
+# TASK 5.3.3: Prepare actual result using filenames
 y_true = [0 if 'cat' in filename else 1 for filename in test_data.filenames]
 print(y_true)
 ```
@@ -700,7 +694,7 @@ To train a CNN from scratch in order to achieve high accuracy, it takes many ima
 
 A more refined approach is to leverage a CNN that is already pre-trained on a large dataset. Such a network would have already learned features that are useful for most computer vision problems. Leveraging such features would allow us to reach a higher accuracy in a faster manner.
 
-For this workshop, we will use the VGG16 architecture. Because its dataset contains several "cat" classes and many "dog" classes among its total of 1000 classes, this model will already have learned features that are relevant to our classification problem.
+For this workshop, we will use the VGG16 CNN model. Because its dataset contains several "cat" classes and many "dog" classes among its total of 1000 classes, this model will already have learned features that are relevant to our classification problem.
 
 
 #### 7.1 Set up backend and Import libraries
@@ -760,6 +754,11 @@ Here, we can see that 19 out of the 23 layers are not trainable.
 ```
 [INFO]     Pretrained model layers: 19
 [INFO]     Total number of layers : 23
+```
+Now, compile the model with the same settings as the previous basic model.
+```python
+# TASK 7.2.4: Compile model
+model.compile(loss = 'binary_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
 ```
 
 #### 7.3 Check Model
@@ -864,10 +863,10 @@ It takes 7.12 min to train the model
 ```
 
 ## Task 9 - Test Advanced Model
-Same as before, we load the advanced model I trained before this workshop first.
+Same as before, we load the advanced model that I trained before this workshop.
 
 #### 9.1 Load Model
-
+Put the address of the model in the parameter of the ```.load_model``` function.
 ```python
 # TASK 9.1: Load trained model
 from keras.models import load_model
@@ -875,7 +874,7 @@ model_advanced = load_model('./drive/NTUOSS-ImageRecognitionWorkshop/data/model/
 ```
 
 #### 9.2 Generate Test Image Data from Directory
-Then, generate test data from directory.
+Then, generate test data from directory with the same settings.
 ```python
 # TASK 9.2.1 : Set up data generator for test data
 from keras.preprocessing.image import ImageDataGenerator
@@ -927,9 +926,9 @@ print(y_pred)
 [0, 1, 1, 0, ... 1, 1, 1, 1]
 ```
 
-Prepare true result using folder name in filenames.
+Prepare the actual results using folder name in filenames.
 ```python
-# TASK 9.3.3: Prepare true result using folder name in filenames
+# TASK 9.3.3: Prepare actual result using folder name in filenames
 y_true = [0 if 'cat' in filename else 1 for filename in test_data.filenames]
 print(y_true)
 ```
@@ -969,7 +968,7 @@ All	74	126	200
 
 ## Task 10 - Recognize Image with Advanced Model
 
-Now, play with the advanced model and have fun!
+Now, feel free to play with the advanced model and have fun!
 #### 10.1 Make Prediction
 
 ```python
@@ -985,6 +984,8 @@ print('Class: ' + process_result(prob))
 Probability: [[0.18195716]]
 Class: cat
 ```
+
+I hope after this workshop, all of you are able to build your own CNN model with Keras. There are also many ways to improve this model, such as adding more training data, adding more layers, building broader networks, modify parameters and so on. Again, this workshop focuses more on the implementation part. If you are interested in how the underlying math works or what are the most advanced CNN architecture, do source for any external resources.
 ___
 
 ## Acknowledgements
