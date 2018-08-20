@@ -92,7 +92,7 @@ As you only have 'View' access to this 'start' file, make a copy of it to save o
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_copy.png">
 </p>
 
-Now, let's open the copy of the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+Now, let's go to your own drive and open the 'Copy of start' file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png">
