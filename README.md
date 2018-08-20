@@ -321,7 +321,7 @@ Now, let us see what each of the above packages are imported for:
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_b.gif">
 </p> 
-[Source](https://www.learnopencv.com/image-classification-using-convolutional-neural-networks-in-keras/)
+
 </br></br>The above example shows a filter of size 3 * 3, sliding over a image size of 5 * 5. Let's do a quick math: how many different locations in the image can the flashlight shed light upon? The answer is actually shown on the right side of the example, i.e 9.
 
 - **MaxPooling2D**: MaxPooling2D is used for pooling operation. Pooling layer is mostly used immediately after the convolutional layer to reduce the spatial size (only width and height, not depth). This reduces the number of parameters, hence reducing the computation and avoiding overfitting. ([Read more on Pooling Layers](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/))</br></br>
@@ -330,7 +330,6 @@ Now, let us see what each of the above packages are imported for:
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_c.png">
 </p> 
 
-[Source](https://medium.com/@tifa2up/image-classification-using-deep-neural-networks-a-beginner-friendly-approach-using-tensorflow-94b0a090ccd4)
 </br></br>The above exmaple shows a max pool layer with filter size 2×2 and stride 2. The output is the max value in a 2×2 region shown using encircled digits. The stride is the pixel step by which we slide the filter. When the stride is 2, the filters jump 2 pixels at a time. This max pool layer reduces the number of parameters by half.
 
 - **Flatten**: Flattening is the process of converting all the resultant 3-D arrays into a single long continuous linear vector.
