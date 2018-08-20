@@ -47,7 +47,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 #### 0.2 Initial Setup
 
-Add this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) to your google drive
+Download this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) and add to your google drive
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_a.png" width="500">
@@ -60,7 +60,7 @@ Inside the folder, you will find one data folder and one start file:
   /start
 ```
 
-In the /data folder, there are train, test and validation image folders, with the data distribution shown as below. To allow Keras to use its special API to handle the data downloads directly from the folder, the tructure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop.
+In the /data folder, there are train, test and validation image folders, with the data distribution shown as below. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the tructure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop.
 
 ```
 /data
@@ -98,7 +98,7 @@ Now, let's go to your own drive and open the 'Copy of start' file to officially 
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png" width="500">
 </p>
 
-Alternatively, follow the steps as shown below.
+If you do not have any app to open the notebook yet, follow the steps as shown below.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_c.png" width="500">
@@ -278,6 +278,8 @@ validation_data = datagen_val.flow_from_directory(
     shuffle = True,
     batch_size = 50)
 ```
+
+The running of above code might take a while.
 
 As we have 2000 images of each class for train set and 1000 images of each class for validation set, you should see this response:
 ```
