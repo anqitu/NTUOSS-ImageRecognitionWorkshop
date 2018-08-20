@@ -89,13 +89,13 @@ This 'start' file is a Colab notebook which contains the incomplete codes for th
 As you only have 'View' access to this 'start' file, make a copy of it to save on your own drive so that you can edit it.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_copy.png">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_copy.png" width="500">
 </p>
 
 Now, let's go to your own drive and open the 'Copy of start' file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png" width="500">
 </p>
 
 Alternatively, follow the steps as shown below.
