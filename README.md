@@ -31,7 +31,7 @@ The idea of image classification is that, you give the computer this array of nu
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_1.png" width="500">
-</p> 
+</p>
 
 
 2. What are [CNNs](https://ujjwalkarn.me/2016/08/11/intuitive-explanation-convnets/)?\
@@ -84,13 +84,27 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-This 'start' file is Colab Notebooks which contains the incomplete codes for the purpose of this workshop.
+This 'start' file is a Colab notebook which contains the incomplete codes for the purpose of this workshop.
 
 Now, let's open the start file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png">
-</p> 
+</p>
+
+Alternatively, follow the steps as shown below.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_c.png" width="500">
+</p>
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_d.png" width="500">
+</p>
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_e.png" width="500">
+</p>
 
 
 ## Task 1 - Virtual Environment
@@ -103,21 +117,21 @@ First of all, we need to ensure our "Hardware accelerator" is set to GPU (the de
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_a.png" width="500">
-</p> 
+</p>
 
 
 On this pop-up, select GPU.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_b.png" width="500">
-</p> 
+</p>
 
 
  Afterward, ensure that you are connected to the runtime (there is a green check next to "connected" in the menu ribbon).
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_c.png" width="500">
-</p> 
+</p>
 
 
 To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code.
@@ -137,7 +151,7 @@ Alternatively, supply and demand issues may lead to this:
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
-</p> 
+</p>
 
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
 
@@ -306,7 +320,7 @@ Each of this package corresponds to a layer of the model we are going to build. 
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_a.png">
-</p> 
+</p>
 [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
 
 
@@ -320,7 +334,7 @@ Now, let us see what each of the above packages are imported for:
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_b.gif">
-</p> 
+</p>
 
 </br></br>The above example shows a filter of size 3 * 3, sliding over a image size of 5 * 5. Let's do a quick math: how many different locations in the image can the flashlight shed light upon? The answer is actually shown on the right side of the example, i.e 9.
 
@@ -328,7 +342,7 @@ Now, let us see what each of the above packages are imported for:
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_c.png">
-</p> 
+</p>
 
 </br></br>The above exmaple shows a max pool layer with filter size 2×2 and stride 2. The output is the max value in a 2×2 region shown using encircled digits. The stride is the pixel step by which we slide the filter. When the stride is 2, the filters jump 2 pixels at a time. This max pool layer reduces the number of parameters by half.
 
@@ -337,7 +351,7 @@ Now, let us see what each of the above packages are imported for:
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_d.png" width="500">
-</p> 
+</p>
 
 #### 3.2 Construct Model
 
