@@ -1064,7 +1064,7 @@ ___
 
 ## Acknowledgements
 
-Many thanks to [clarencecastillo](https://github.com/clarencecastillo) for carefully testing this walkthrough and to everybody else in [NTU Open Source Society](https://github.com/ntuoss) committee for making this happen! :kissing_heart::kissing_heart::kissing_heart:
+Many thanks to [clarencecastillo](https://github.com/clarencecastillo) and Tang Jiayun for carefully testing this walkthrough and to everybody else in [NTU Open Source Society](https://github.com/ntuoss) committee for making this happen! :kissing_heart::kissing_heart::kissing_heart:
 
 ## Resources
 [Keras Docs](https://keras.io/)</br>
