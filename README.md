@@ -46,7 +46,11 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 #### 0.2 Overview
 
-@TODO Flowchart
+Here is an overview of today's workshop.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/flowchart.png" width="500">
+</p>
 
 #### 0.3 Initial Setup
 
@@ -1055,7 +1059,7 @@ Probability: [[0.18195716]]
 Class: cat
 ```
 
-I hope after this workshop, all of you are able to build your own CNN model with Keras. You can also find the completed scripts for today's workshop inside the /completed folder from the repo. There are also many ways to improve this model, such as adding more training data, adding more layers, building broader networks, modify parameters and so on. Again, this workshop focuses more on the implementation part. If you are interested in how the underlying math works or what are the most advanced CNN architecture, do source for any external resources.
+I hope after this workshop, all of you are able to build your own CNN model with Keras. You can also find the [completed script](https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/completed/workshop_completed.ipynb) for today's workshop inside the /completed folder from the repo. There are also many ways to improve this model, such as adding more training data, adding more layers, building broader networks, modify parameters and so on. Again, this workshop focuses more on the implementation part. If you are interested in how the underlying math works or what are the most advanced CNN architecture, do source for any external resources.
 ___
 
 ## Acknowledgements
