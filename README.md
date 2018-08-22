@@ -49,7 +49,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 Here is an overview of today's workshop.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/flowchart.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/flowchart.png" width="600">
 </p>
 
 #### 0.3 Initial Setup
