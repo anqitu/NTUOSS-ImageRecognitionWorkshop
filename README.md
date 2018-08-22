@@ -23,7 +23,7 @@ ___
 
 #### 0.1 Introduction
 
-For this tutorial, we'll be creating a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
+For this tutorial, we'll be training a Convolutional Neural Network(CNN) model with Keras on Colaboratory. The model will be able to classify the images of cat and dog.
 
 1. What is Image Recognition (or Image Classification)?\
 When a computer sees an image (takes an image as input), it will see an array of pixel values. Depending on the resolution and size of the image, it will see a WIDTH x HEIGHT x 3 array of numbers (The WIDTH and HEIGHT refers to the size while the 3 refers to RGB values). For example, suppose we have a colorful image in JPG format with a size 480 x 480. The array seen by the computer will be 480 x 480 x 3. Each of these numbers is a value between 0 and 255 which describes the pixel intensity at that point. These numbers, while meaningless to us when we perform image classification, are the only inputs available to the computer.\
@@ -44,13 +44,16 @@ Keras is an open source neural network library written in Python. It was develop
 Colaboratory is a Google research project created to help disseminate machine learning education and research. It is a free Jupyter notebook environment that requires no setup and runs entirely in a virtual machine (VM) hosted in the cloud.
 
 
+#### 0.2 Overview
 
-#### 0.2 Initial Setup
+@TODO Flowchart
+
+#### 0.3 Initial Setup
 
 Download and unzip this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7),  then add to your google drive.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_a.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
 </p>
 
 Inside the folder, you will find one data folder and one start file:
@@ -60,16 +63,16 @@ Inside the folder, you will find one data folder and one start file:
   /start
 ```
 
-In the /data folder, there are train, test and validation image folders, with the data distribution shown as below. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the tructure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop.
+In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
 
 ```
 /data
   /train:
-    /cat: 2000
-    /dog: 2000
+    /cat: 200
+    /dog: 200
   /validation
-    /cat: 1000
-    /dog: 1000
+    /cat: 100
+    /dog: 100
   /test
     /cat: 100
     /dog: 100
@@ -84,32 +87,24 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-This 'start' file is a Colab notebook which contains the incomplete codes for the purpose of this workshop.
-
-As you only have 'View' access to this 'start' file, make a copy of it to save on your own drive so that you can edit it.
+This 'start' file is a Colab notebook which contains the incomplete codes for the purpose of this workshop. Now, let's open the 'start' file together to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_copy.png" width="500">
-</p>
-
-Now, let's go to your own drive and open the 'Copy of start' file to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
-
-<p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_b.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b.png" width="500">
 </p>
 
 If you do not have any app to open the notebook yet, follow the steps as shown below.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_c.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
 </p>
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_d.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_d.png" width="500">
 </p>
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_2_e.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_e.png" width="500">
 </p>
 
 
@@ -227,7 +222,9 @@ Lastly, check the /data directory.
 
 #### 2.1 Configure Image Augmentation
 <!-- TODO: image augmentation -->
-As we only have 2000 training images for each class, this is considered definitely quite few for the model to learn enough patterns and recognize images accurately. (For example, [VGG16](https://arxiv.org/abs/1409.1556) is a convolutional neural network model trained on 14 million images to recognize an image as one of 1000 categories with an accuracy of 92.5%.) One way to enlarge our existing dataset is some easy transformations. As previously mentioned, when a computer takes an image as an input, it will take in an array of pixel values. Imagine that the whole image is shifted left by 1 pixel. For us, this change is imperceptible. However, for a computer, this shift can be indeed very significant. Approaches that alter the training data in ways that change the array representation while keeping the label the same are known as **data augmentation**. It allows us to artificially expand our dataset. Some popular augmentations are horizontal flips, random crops, translations, rotations, and so on. By applying just a couple of these transformations to our training data, we can easily enlarge our data set.
+As we only have 2000 training images for each class, this is considered definitely quite few for the model to learn enough patterns and recognize images accurately. For example, [VGG16](https://arxiv.org/abs/1409.1556) is a convolutional neural network model trained on 14 million images to recognize an image as one of 1000 categories with an accuracy of 92.5%.
+
+One way to enlarge our existing dataset is some easy transformations. As previously mentioned, when a computer takes an image as an input, it will take in an array of pixel values. Imagine that the whole image is shifted left by 1 pixel. For us, this change is imperceptible. However, for a computer, this shift can be indeed very significant. Approaches that alter the training data in ways that change the array representation while keeping the label the same are known as **data augmentation**. It allows us to artificially expand our dataset. Some popular augmentations are horizontal flips, random crops, translations, rotations, and so on. By applying just a couple of these transformations to our training data, we can easily enlarge our data set.
 
 Here we import the [```ImageDataGenerator```](https://keras.io/preprocessing/image/) from Keras libraries and add some data augmentation parameters for the image data generator.
 - **rescale = 1. / 255**: Rescaling factor. The factor to multiply every pixel in the preprocessing image. As mentioned earlier, each digital colorful image contains three maps of pixels: Red, Green and Blue, and all the pixels are in the range 0~255. Since 255 is the maximin pixel value. Rescale 1./255 is to transform every pixel value from range [0,255] -> [0,1]. The benefit of such a rescaling is that it makes the model treat all images (regardless with high or low pixel range) in the same manner.
@@ -428,7 +425,7 @@ After flattening, we need to create a fully connected layer to which we connect 
 
 ```python
 # TASK 3.2.6 Add the connection layer
-model.add(Dense(units = 256, activation='relu'))
+model.add(Dense(units = 256, activation='relu')) # output shape = (256,)
 ```
 
 Dense is the function to add a fully connected layer, ‘units’ is where we define the number of nodes that should be present in this hidden layer. It always required many experimental tries to choose the most optimal number of nodes.
@@ -438,7 +435,7 @@ Then, we add the output layer. The number here indicates the shape of output lay
 
 ```python
 # TASK 3.2.7 Add the output layer
-model.add(Dense(units = 1, activation = 'sigmoid'))
+model.add(Dense(units = 1, activation = 'sigmoid')) # output shape = (1,)
 ```
 
 
@@ -552,6 +549,13 @@ It takes 84.95 min to train the model
 
 For your information, it took me 84.95 min to train the model (as the there are lots of computations involved). Thus, I suggest you to use the trained model inside the model folder for the rest of the workshop, and try training your own model when you go back home.
 
+Thus, click on the small circle to stop the running of this cell, as shown below.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_2.png" width="500">
+</p>
+
+
 ## Task 5 - Test Model
 Sa we can see from the training history, the final accuracy score is 74% for train data and 78% for validation data. Now let us test the model with our own test data.
 
@@ -576,7 +580,7 @@ Similar to how we generate data for train and validation data, we can also do th
 ```python
 # TASK 5.2.1: Set up data generator for test data
 from keras.preprocessing.image import ImageDataGenerator
-test_datagen = ImageDataGenerator(rescale=1. / 255)
+datagen_test = ImageDataGenerator(rescale=1. / 255)
 
 test_data = datagen_test.flow_from_directory (
     directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/test',
@@ -612,7 +616,7 @@ Then, we use the ```.predict_generator``` function of the model to classify out 
 probabilities = model_basic.predict_generator(test_data)
 print(probabilities)
 ```
-Here, we see the output for each image is a probability between 0 and 1.
+Here, we will see the output for each image is a probability between 0 and 1.
 ```
 [[0.14854874]
  [0.74102986]
@@ -623,6 +627,8 @@ Here, we see the output for each image is a probability between 0 and 1.
  [0.9622177 ]
  [0.607676  ]]
 ```
+
+As it may takes some time for our model to make prediction, let's do some preparation while waiting for the result.
 
 Here, we set the threshold as 0.5, which means a probability above 0.5 indicates 1 (dog), otherwise 0 (cat).
 ```python
@@ -758,7 +764,9 @@ K.set_image_dim_ordering('tf') #channel last
 K.set_image_data_format('channels_last')
 ```
 
-Then, import necessary Keras libraries and packages. Notice that here we add a Dropout layer whose purpose is to avoid overfitting with regularization.
+Then, import necessary Keras libraries and packages:
+Notice that here we add a Dropout layer whose purpose is to avoid overfitting with regularization.
+Keras Applications are deep learning models that are made available alongside pre-trained weights. These models can be used for prediction, feature extraction, and fine-tuning. (https://keras.io/applications/)
 
 ```python
 # TASK 7.1.2 Import the Keras libraries and packages
