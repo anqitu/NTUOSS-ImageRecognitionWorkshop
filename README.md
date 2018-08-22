@@ -348,6 +348,7 @@ Each of this package corresponds to a layer of the model we are going to build. 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_a.png">
 </p>
+
 [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
 
 
