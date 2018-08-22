@@ -255,6 +255,9 @@ Here we import the [```ImageDataGenerator```](https://keras.io/preprocessing/ima
 
 ```python
 # TASK 2.1 : Add augmentation configuration for the data generator of train data only
+
+from keras.preprocessing.image import ImageDataGenerator
+
 datagen_train =  ImageDataGenerator(
     rescale = 1. / 255,
     rotation_range = 30,
