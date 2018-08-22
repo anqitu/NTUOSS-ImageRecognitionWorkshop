@@ -145,7 +145,7 @@ tf.test.gpu_device_name()
 If you are not familiar with Jupiter Notebook and do not know how to run the current cell. Select 'Tools' -> 'Keyboard Shortcuts'.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d_.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
 </p>
 
 AS shown below, you will see many shortcuts. The only one you know for this workshop is 'Run the focused cell' - 'Command'/'Control' + 'Enter'.
