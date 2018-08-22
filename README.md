@@ -64,7 +64,7 @@ Inside the folder, you will find one data folder and one start file:
 ```
 /NTUOSS-ImageRecognitionWorkshop
   /data
-  /start
+  /start.ipynb
 ```
 
 In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
