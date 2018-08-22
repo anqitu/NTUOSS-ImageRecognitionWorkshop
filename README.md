@@ -50,7 +50,7 @@ Colaboratory is a Google research project created to help disseminate machine le
 
 #### 0.3 Initial Setup
 
-Download and unzip this [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7),  then add to your google drive.
+Download and unzip this [folder](https://workupload.com/start/rk8DFaEh),  then add to your google drive.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
@@ -63,7 +63,7 @@ Inside the folder, you will find one data folder and one start file:
   /start
 ```
 
-In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
+In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
 
 ```
 /data
@@ -547,12 +547,12 @@ Epoch 17/25
 It takes 84.95 min to train the model
 ```
 
-For your information, it took me 84.95 min to train the model (as the there are lots of computations involved). Thus, I suggest you to use the trained model inside the model folder for the rest of the workshop, and try training your own model when you go back home.
+For your information, it took me 84.95 min to train the model (as the there are lots of computations involved). Thus, due to time constraints, I suggest you to use the trained model inside the model folder for the rest of the workshop, and try training your own model when you go back home.
 
 Thus, click on the small circle to stop the running of this cell, as shown below.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_2.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_2.png">
 </p>
 
 
@@ -561,7 +561,7 @@ Sa we can see from the training history, the final accuracy score is 74% for tra
 
 #### 5.1 Load Model
 
-Firstly, we need to load the model that I have trained before this workshop with the codes above. All we need to do is to specify the location of the model in the ```load_model``` function.
+Firstly, we need to load the model that I have trained before this workshop on the 4000 images with the codes above. All we need to do is to specify the location of the model in the ```load_model``` function.
 ```python
 # TASK 5.1: Load trained model
 from keras.models import load_model
@@ -641,7 +641,7 @@ print(y_pred)
 [0, 1, 1, 0, ... 0, 1, 1, 1]
 ```
 
-Then, we need to prepare the actual list of class result using the class referred from filenames.
+Then, we need to prepare the list of actual class result, using the class label referred from filenames.
 ```python
 # TASK 5.3.3: Prepare actual result using filenames
 y_true = [0 if 'cat' in filename else 1 for filename in test_data.filenames]
