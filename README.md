@@ -142,6 +142,18 @@ import tensorflow as tf
 tf.test.gpu_device_name()
 ```
 
+If you are not familiar with Jupiter Notebook and do not know how to run the current cell. Select 'Tools' -> 'Keyboard Shortcuts'.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
+</p>
+
+AS shown below, you will see many shortcuts. The only one you know for this workshop is 'Run the focused cell' - 'Command'/'Control' + 'Enter'.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_e.png" width="500">
+</p>
+
 If you are connected, here is the response:
 ```
 '/device:GPU:0'
@@ -151,7 +163,7 @@ And there you go. This allows you to access a free GPU for up to 12 hours at a t
 Alternatively, supply and demand issues may lead to this:
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_f.png" width="500">
 </p>
 
 You will need to try again later to see whether there is any available free GPU. Don't worry even if you do not have the access to an available GPU now, as I will explain later.
