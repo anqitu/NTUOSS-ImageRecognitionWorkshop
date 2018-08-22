@@ -185,6 +185,9 @@ To import tha data into the VM, we will mount the google drive on the machine us
 !apt-get -y install -qq google-drive-ocamlfuse fuse
 ```
 
+> **Shell Assignment** <br>
+The exclamation mark `!` (or bang) allows us to execute shell commands outside of the Python interpreter. This is useful for when you need to access the underlying shell, like installing dependencies, traversing directories or moving files around.
+
 Then, authenticate and get credentials for your google drive.
 ```python
 # Task: 1.2.2 Authenticate and get credentials
