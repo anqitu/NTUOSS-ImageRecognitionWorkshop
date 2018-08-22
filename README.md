@@ -331,7 +331,7 @@ For this workshop, we will use [TensorFlow](https://www.tensorflow.org/) as the 
 ```python
 # TASK 3.1.1 Configure backend
 from keras import backend as K
-K.set_image_dim_ordering('tf') #channel last
+K.set_image_dim_ordering('tf')
 K.set_image_data_format('channels_last')
 ```
 
