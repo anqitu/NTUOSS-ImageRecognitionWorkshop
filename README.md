@@ -60,13 +60,7 @@ Open this google drive [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9w
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
 </p>
 
-Inside the folder, you will find one data folder:
-```
-/NTUOSS-ImageRecognitionWorkshop
-  /data
-```
-
-In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
+Inside the folder, you will find one /data folder. In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
 
 ```
 /data
@@ -90,19 +84,21 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-Then, download and unzip this [folder](@TODO), and upload it to your google drive. There will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contain the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
+Then, download and unzip this [folder](@TODO), and upload it to your google drive.
+
+For this moment, there will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contains the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b.png" width="500">
 </p>
 
-Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start' file together to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start' file together to officially start the coding part of today's workshop: Right click 'start' file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
 </p>
 
-If you do not have any app to open the notebook yet, follow the steps as shown below: Right click start file -> Select 'Connect more apps' -> Search for 'colaboratory' -> Click on 'connect'.
+If you do not have any app to open the notebook yet, follow the steps as shown below: Right click 'start' file -> Select 'Connect more apps' -> Search for 'colaboratory' -> Click on 'connect'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_d.png" width="500">
