@@ -60,10 +60,10 @@ Open this google drive [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9w
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
 </p>
 
-Inside the folder, you will find one /data folder. In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
+Inside the folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
 
 ```
-/data
+/NTUOSS-ImageRecognitionWorkshop-Data
   /train:
     /cat: 2000
     /dog: 2000
@@ -136,7 +136,7 @@ On this pop-up, select GPU.
 </p>
 
 
-To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code.
+To check whether you have a visible GPU (i.e. you are currently connected to a GPU instance), run the following code by pressing - 'Command'/'Control' + 'Enter'.
 ```python
 # Task 1.1: Check if you are currently using the GPU in Colab
 import tensorflow as tf
@@ -149,7 +149,7 @@ If you are not familiar with Jupiter Notebook and do not know how to run the cur
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_d.png" width="500">
 </p>
 
-AS shown below, you will see many shortcuts. The only one you know for this workshop is 'Run the focused cell' - 'Command'/'Control' + 'Enter'.
+As shown below, you will see many shortcuts. The only one you know for this workshop is 'Run the focused cell' - 'Command'/'Control' + 'Enter'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_1_1_e.png" width="500">
@@ -195,7 +195,7 @@ import getpass
 vcode = getpass.getpass()
 !echo {vcode} | google-drive-ocamlfuse -headless -id={creds.client_id} -secret={creds.client_secret}
 ```
-You will be asked two times to authenticate the access to your drive. At each step a token will be generated:
+You will be asked **twice** to authenticate the access to your drive. At each step a token will be generated:
 - Click on the link to log into your google account.
 - Allow access to your drive.
 - Copy the token (The token looks like this - 4/PABmEY7BRPd3jPR9BI9I4R99gc9QITTYFUVDU76VR)
@@ -225,9 +225,9 @@ Then, access our working directory /drive/NTUOSS-ImageRecognitionWorkshop by run
 !ls drive/NTUOSS-ImageRecognitionWorkshop
 ```
 
-Lastly, check the /data directory.
+Lastly, check the data directory.
 ```python
-!ls drive/NTUOSS-ImageRecognitionWorkshop/data
+!ls drive/NTUOSS-ImageRecognitionWorkshop-Data/data
 ```
 
 
@@ -247,8 +247,13 @@ Here we import the [```ImageDataGenerator```](https://keras.io/preprocessing/ima
 - **zoom_range = 0.2**: Float. Fraction range for random zoom.
 - **horizontal_flip = True**: Boolean. Randomly flip inputs horizontally.
 
+We will only apply the data augmentation for training data as we want to enlarge the data to feed the mode. For the validation data, we only apply the scaling since its purpose it to provide an unbiased performance measurement for the model and we do not want to mess up with it.
+
 ```python
 # TASK 2.1 : Add augmentation configuration for the data generator of train data only
+
+from keras.preprocessing.image import ImageDataGenerator
+
 datagen_train =  ImageDataGenerator(
     rescale = 1. / 255,
     rotation_range = 30,
@@ -256,6 +261,8 @@ datagen_train =  ImageDataGenerator(
     height_shift_range = 0.2,
     zoom_range = 0.2,
     horizontal_flip = True)
+datagen_val = ImageDataGenerator(
+    rescale = 1. / 255)
 ```
 
 #### 2.2 Generate Image Data from Directory
@@ -267,22 +274,22 @@ Also it is time to put some additional parameters, like class_mode, target_size 
 - **class_mode = 'binary'**: Mode of class. Set as binary since the model is trained to classify whether the image is a cat a dog, which is a yes/no question. If the model is trained on classifying more than 2 categories, the class mode should be set to 'categorical'.
 - **shuffle = True**: Whether to shuffle the data. Set True if you want to shuffle the order of the image that is being yielded, else set False.
 - **batch_size = 50**: Number of images in one batch of data. Here we need to explain a bit on the concept of epoch and batch size:\
-`one epoch` = one forward pass and one backward pass of all the training samples.\
-`batch size` = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. Ideally, we would want to use all the training samples to calculate the gradients for every single update, but that is not efficient. Also, the higher the batch size, the more memory space we'll need. One strategy is to split the data into batches and fit them one by one to the model to update the parameters.\
-`One pass` = one forward pass + one backward pass.\
+`one epoch` = one forward pass and one backward pass of all the training samples. *(Imagine the forward pass as taking an exam, and the backward pass as reviewing the exam to correct your understanding of concepts.)*\
+`batch size` = the number of training samples in one forward/backward pass. Each batch size will be used to update the model parameters. Ideally, we would want to use all the training samples to calculate the gradients for every single update, but that is not efficient. Also, the higher the batch size, the more memory space we'll need. One strategy is to split the data into batches and fit them one by one to the model to update the parameters. *(Imagine that solving 4000 questions in one exam is too overwhelmed for you. Thus, you ask the professor to split the questions into 50 per quiz.)*\
 For instance, here we have 4000 training samples and we set the batch_size as 50. The first 50 samples from the training dataset will be used to train the network. Then it takes second 50 samples to train network again. This procedure continues until all samples have been propagated through the networks. In total, there will be 4000/50 = 80 batches for each epoch. We select 50 here because it divides 2000.
 
 
 ```python
-# TASK 2.2 : Generate Image Data from Directory and Set parameter
+# TASK 2.2.1 : Generate Image Data from Directory and Set parameter
+
 train_data = datagen_train.flow_from_directory(
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/train',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/data/train',
     target_size = (150, 150),
     class_mode = 'binary',
     shuffle = True,
     batch_size = 50)
 validation_data = datagen_val.flow_from_directory(
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/validation',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/data/validation',
     target_size = (150, 150),
     class_mode = 'binary',
     shuffle = True,
