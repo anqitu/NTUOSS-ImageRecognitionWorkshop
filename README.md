@@ -85,7 +85,7 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-Then, download and unzip this [folder](https://workupload.com/file/gNBztaJc), and upload it to your google drive.
+Then, download and unzip this [folder](https://workupload.com/file/h2Vcjr4R), and upload it to your google drive.
 
 For this moment, there will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contains the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
 
