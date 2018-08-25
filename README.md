@@ -54,17 +54,16 @@ Here is an overview of today's workshop.
 
 #### 0.3 Initial Setup
 
-Download and unzip this [folder](https://workupload.com/start/rk8DFaEh),  then add to your google drive.
+Open this google drive [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9wgzYw6tTPS_lW20T9e7) and add to your own google drive.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
 </p>
 
-Inside the folder, you will find one data folder and one start file:
+Inside the folder, you will find one data folder:
 ```
 /NTUOSS-ImageRecognitionWorkshop
   /data
-  /start
 ```
 
 In the /data folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
@@ -91,10 +90,16 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-This 'start' file is a Colab notebook which contains the incomplete codes for the purpose of this workshop. Now, let's open the 'start' file together to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+Then, download and unzip this [folder](@TODO), and upload it to your google drive. There will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contain the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b_.png" width="500">
+</p>
+
+Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start' file together to officially start the coding part of today's workshop: Right click start file -> Select 'Open with' -> Select 'Colaboratory'.
+
+<p align="center">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
 </p>
 
 If you do not have any app to open the notebook yet, follow the steps as shown below.
