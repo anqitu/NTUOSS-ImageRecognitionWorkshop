@@ -84,7 +84,7 @@ Here are the purposes of each type of data set:
 
 - **Test**: The test dataset is a dataset used to provide an unbiased evaluation of our final model.
 
-Then, download and unzip this [folder](@TODO), and upload it to your google drive.
+Then, download and unzip this [folder](https://workupload.com/file/gNBztaJc), and upload it to your google drive.
 
 For this moment, there will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contains the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
 
@@ -92,7 +92,7 @@ For this moment, there will be two folders in your google drive. One is 'NTUOSS-
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b.png" width="500">
 </p>
 
-Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start' file together to officially start the coding part of today's workshop: Right click 'start' file -> Select 'Open with' -> Select 'Colaboratory'.
+Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start.ipynb' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start.ipynb' file together to officially start the coding part of today's workshop: Right click 'start.ipynb' file -> Select 'Open with' -> Select 'Colaboratory'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
@@ -510,8 +510,8 @@ print("It takes {:.2f} min to train the model".format((time.time() - train_start
 ```
 Again, let us break down the code by parameters:
 - **generator**: The data generator we have created previously for training image data.
-- **epochs**: The number of steps to train our CNN model. For each single step, the neural network is trained on every training samples to update its parameters (weights and bias).
-- **callbacks**: A set of functions to be applied at given stages of the training procedure. Here, we use ```EarlyStopping``` which early stops the training when a monitored quantity has stopped improving. Here, we set the monitored value as ```val_loss```, which is the error value calculated by the loss function for the validation dataset. ```patience``` indicates the number of epochs with no improvement after which training will be stopped. Here, the training will stop early is the 'val_loss' does not improve for two epochs. ```verbose```specifies the verbosity mode: 0 = silent, 1 = progress bar, 2 = one line per epoch.
+- **epochs**: The number of steps to train our CNN model. For each single step, the neural network is trained on every training samples to update its parameters (weights and bias). *(Imagine our model needs to take 25 exams.)*
+- **callbacks**: A set of functions to be applied at given stages of the training procedure. Here, we use ```EarlyStopping``` which early stops the training when a monitored quantity has stopped improving. Here, we set the monitored value as ```val_loss```, which is the error value calculated by the loss function for the validation dataset. ```patience``` indicates the number of epochs with no improvement after which training will be stopped. Here, the training will stop early is the 'val_loss' does not improve for two epochs. ```verbose```specifies the verbosity mode: 0 = silent, 1 = progress bar, 2 = one line per epoch. *(Imagine this allows our model to graduate early.)*
 - **validation_data**: The data generator we have created previously for validation image data.
 
 
@@ -793,7 +793,7 @@ We break down the code by paramaters again:
 - **weights = 'imagenet'**: weights to initialize the model with. Here we set it as the weights that have been pre-trained on ImageNet dataset.
 - **input_shape = (150, 150, 3)**: image shape of our image data.
 
-Then, we add new dense and output layers on top of the base model. Different from the previous basic model, we add a dropout layer here. The dropout randomly drops 40% of connections of neurons from the dense layer to prevent overfitting.
+Then, we add new dense and output layers on top of the base model. Different from the previous basic model, we add a dropout layer here. The dropout randomly drops 40% of connections of neurons from the dense layer to prevent overfitting. *(Imagine the Dropout as skipping some of the questions in your exam.)*
 
 ```python
 # TASK 7.2.2: Add new layers
@@ -1022,7 +1022,7 @@ ___
 
 ## Acknowledgements
 
-Many thanks to [clarencecastillo](https://github.com/clarencecastillo) and Tang Jiayun for carefully testing this walkthrough and to everybody else in [NTU Open Source Society](https://github.com/ntuoss) committee for making this happen! :kissing_heart::kissing_heart::kissing_heart:
+Many thanks to [clarencecastillo](https://github.com/clarencecastillo) for carefully testing this walkthrough and to everybody else in [NTU Open Source Society](https://github.com/ntuoss) committee for making this happen! :kissing_heart::kissing_heart::kissing_heart:
 
 ## Resources
 [Keras Docs](https://keras.io/)</br>
