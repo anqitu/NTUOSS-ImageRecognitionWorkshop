@@ -60,6 +60,7 @@ Open this google drive [folder](https://drive.google.com/open?id=1uZT-vRnWgxYp9w
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_a.png" width="500">
 </p>
 
+
 Inside the folder, there are train, test and validation image folders. The data here are all downloaded from [Kaggle](https://www.kaggle.com/c/dogs-vs-cats-redux-kernels-edition/data). To allow Keras to use its special API to handle the data downloads directly from the folder, the structure of the project folder must be as following. There is a also a model folder containing the models I have trained before this workshop, with a much larger data set (2000 for each class) than what we are using for this workshop. To improve the accuracy of the model by training on a larger dataset after this workshop, you can download more images from Kaggle.
 
 ```
@@ -181,6 +182,9 @@ To import tha data into the VM, we will mount the google drive on the machine us
 !apt-get update -qq 2>&1 > /dev/null
 !apt-get -y install -qq google-drive-ocamlfuse fuse
 ```
+
+> **Shell Assignment** <br>
+The exclamation mark `!` (or bang) allows us to execute shell commands outside of the Python interpreter. This is useful for when you need to access the underlying shell, like installing dependencies, traversing directories or moving files around.
 
 Then, authenticate and get credentials for your google drive.
 ```python
@@ -329,7 +333,7 @@ For this workshop, we will use [TensorFlow](https://www.tensorflow.org/) as the 
 ```python
 # TASK 3.1.1 Configure backend
 from keras import backend as K
-K.set_image_dim_ordering('tf') #channel last
+K.set_image_dim_ordering('tf')
 K.set_image_data_format('channels_last')
 ```
 
@@ -346,6 +350,7 @@ Each of this package corresponds to a layer of the model we are going to build. 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_a.png">
 </p>
+
 [Source](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/)
 
 
