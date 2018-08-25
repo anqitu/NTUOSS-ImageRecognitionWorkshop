@@ -71,11 +71,11 @@ In the /data folder, there are train, test and validation image folders. The dat
 ```
 /data
   /train:
-    /cat: 200
-    /dog: 200
+    /cat: 2000
+    /dog: 2000
   /validation
-    /cat: 100
-    /dog: 100
+    /cat: 1000
+    /dog: 1000
   /test
     /cat: 100
     /dog: 100
@@ -102,11 +102,7 @@ Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start' f
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
 </p>
 
-If you do not have any app to open the notebook yet, follow the steps as shown below.
-
-<p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_c.png" width="500">
-</p>
+If you do not have any app to open the notebook yet, follow the steps as shown below: Right click start file -> Select 'Connect more apps' -> Search for 'colaboratory' -> Click on 'connect'.
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_d.png" width="500">
