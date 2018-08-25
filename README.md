@@ -90,7 +90,7 @@ Then, download and unzip this [folder](https://workupload.com/file/h2Vcjr4R), an
 For this moment, there will be two folders in your google drive. One is 'NTUOSS-ImageRecognitionWorkshop-Data' which is the shared folder that contains the data. Another is 'NTUOSS-ImageRecognitionWorkshop' folder which is owned by you.
 
 <p align="center">
-  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b.png" width="500">
+  <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_0_3_b_.png" width="500">
 </p>
 
 Now, open the 'NTUOSS-ImageRecognitionWorkshop' folder. You will see a 'start.ipynb' file, which is a Jupyter notebook that contains the incomplete script that you are going to code on for today's workshop. Let's open the 'start.ipynb' file together to officially start the coding part of today's workshop: Right click 'start.ipynb' file -> Select 'Open with' -> Select 'Colaboratory'.
