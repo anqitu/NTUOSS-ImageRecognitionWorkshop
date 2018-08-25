@@ -227,7 +227,7 @@ Then, access our working directory /drive/NTUOSS-ImageRecognitionWorkshop by run
 
 Lastly, check the data directory.
 ```python
-!ls drive/NTUOSS-ImageRecognitionWorkshop-Data/data
+!ls drive/NTUOSS-ImageRecognitionWorkshop-Data
 ```
 
 
@@ -283,13 +283,13 @@ For instance, here we have 4000 training samples and we set the batch_size as 50
 # TASK 2.2.1 : Generate Image Data from Directory and Set parameter
 
 train_data = datagen_train.flow_from_directory(
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/data/train',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/train',
     target_size = (150, 150),
     class_mode = 'binary',
     shuffle = True,
     batch_size = 50)
 validation_data = datagen_val.flow_from_directory(
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/data/validation',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/validation',
     target_size = (150, 150),
     class_mode = 'binary',
     shuffle = True,
@@ -392,8 +392,8 @@ Then, we add the first set of Since CONV -> RELU -> POOL layers. You will be sur
 
 ```python
 # TASK 3.2.2 Create first set of CONV -> RELU -> POOL layers
-model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3))) # output shape = (148, 148, 32)
-model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (74, 74, 32)
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 ```
 
 Let’s break down the above code parameter by parameter. We take the sequential model object, then add a convolution layer by using the “Conv2D” function. The Conv2D function is taking 4 arguments:
@@ -403,49 +403,36 @@ Let’s break down the above code parameter by parameter. We take the sequential
 
 - the input shape. We only need to specify the input shape for the first layer. Since, we’re using the TensorFlow backend, we arrange the input shape with “channels last” data ordering. The height and width should also corresponds to the image size we set for the data generator, which is (150, 150, 3).
 
-The output shape after the first convolutional layer will be (148, 148, 32). *Think about why*
+Then we have a MaxPooling layer of size (2*2) to reduce the total number of nodes for the upcoming layers. When not specified, the stride is set as the value of the MaxPooling layer size i.e 2.
 
-
-Then we have a MaxPooling layer of size (2*2) to reduce the total number of nodes for the upcoming layers. When not specified, the stride is set as the value of the MaxPooling layer size i.e 2. The output shape of this layer will be (74, 74, 32). *Think about why*
-
-Next, we add the second set of CONV -> RELU -> POOL layers
+Next, we add the second set of CONV -> RELU -> POOL layers. Notice here we do not need to specify the input shape any more.
 
 ```python
 # TASK 3.2.3 Create second set of CONV -> RELU -> POOL layers
-model.add(Conv2D(64, (3, 3), activation='relu')) # output shape = (72, 72, 64)
-model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (36, 36, 64)
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 ```
-Notice here we do not need to specify the input shape any more.
-
-The output shape after the convolutional layer will be (72, 72, 64). *Think about why*
-
-The output shape after the MaxPooling layer will be (36, 36, 64). *Think about why*
 
 Then, we add the third set of CONV -> RELU -> POOL layers
 
 ```python
 # TASK 3.2.4 Create third set of CONV -> RELU -> POOL layers
-model.add(Conv2D(64, (3, 3), activation='relu')) # output shape = (34, 34, 64)
-model.add(MaxPooling2D(pool_size=(2, 2))) # output shape = (17, 17, 64)
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 ```
-
-The output shape after the convolutional layer will be (34, 34, 64). *Think about why*
-
-The output shape after the MaxPooling layer will be (17, 17, 64). *Think about why*
 
 Now, it’s time for us to convert all the pooled images into a continuous vector through Flattening. Flattening takes the 3D array, i.e pooled image pixels, and converts them to a 1D single vector.
 
 ```python
 # TASK 3.2.5 Convert the 3D feature arrays to 1D vector
-model.add(Flatten()) # output shape = (18496,)
+model.add(Flatten())
 ```
-The output shape after flattening would be (18496,). *Think about why*
 
 After flattening, we need to create a fully connected layer to which we connect the set of nodes we got after the flattening step. As this layer is present between the input layer and output layer, we can refer to it a hidden layer.
 
 ```python
 # TASK 3.2.6 Add the connection layer
-model.add(Dense(units = 256, activation='relu')) # output shape = (256,)
+model.add(Dense(units = 256, activation='relu'))
 ```
 
 Dense is the function to add a fully connected layer, ‘units’ is where we define the number of nodes that should be present in this hidden layer. It always required many experimental tries to choose the most optimal number of nodes.
@@ -455,7 +442,7 @@ Then, we add the output layer. The number here indicates the shape of output lay
 
 ```python
 # TASK 3.2.7 Add the output layer
-model.add(Dense(units = 1, activation = 'sigmoid')) # output shape = (1,)
+model.add(Dense(units = 1, activation = 'sigmoid'))
 ```
 
 
@@ -466,9 +453,9 @@ Lastly, compile the model.
 model.compile(loss = 'binary_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
 ```
 Let us break down the function parameter by parameter again:
-- **loss**: The function to compute an error value to represent the difference between the actual output and the predicted output. During our training of the model, we will attempt to either minimize or maximize the value. ```binary_crossentropy``` is usually used for a binary problem. ([Ream more on Cross Entropy](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/))
-- **optimizer**: The function used to update the weights and bias (i.e. the internal parameters of a model) in such a way that the error computed by the loss function is minimized. ([Read more on Optimizer](https://medium.com/data-science-group-iitr/loss-functions-and-optimization-algorithms-demystified-bb92daff331c)) ([Read more on RMSProp](https://medium.com/100-days-of-algorithms/day-69-rmsprop-7a88d475003b))
-- **metrics**: List of metrics to be evaluated by the model during training and testing. ```accuracy``` means the percentage of correct answers. Metric values are recorded at the end of each epoch on the training dataset.
+- **loss**: The function to compute an error value to represent the difference between the actual output and the predicted output. During our training of the model, we will attempt to either minimize or maximize the value. ```binary_crossentropy``` is usually used for a binary problem. *(Imagine the loss as the way to mark the exam you take.)* ([Ream more on Cross Entropy](https://rdipietro.github.io/friendly-intro-to-cross-entropy-loss/))
+- **optimizer**: The function used to update the weights and bias (i.e. the internal parameters of a model) in such a way that the error computed by the loss function is minimized. *(Imagine the optimizer as the method to improve your learning after reviewing the exam result.)* ([Read more on Optimizer](https://medium.com/data-science-group-iitr/loss-functions-and-optimization-algorithms-demystified-bb92daff331c)) ([Read more on RMSProp](https://medium.com/100-days-of-algorithms/day-69-rmsprop-7a88d475003b))
+- **metrics**: List of metrics to be evaluated by the model during training and testing. ```accuracy``` means the percentage of correct answers. Metric values are recorded at the end of each epoch on the training dataset. *(Yes, the metrics are your GPA.)*
 
 #### 3.3 Check Model
 
@@ -585,7 +572,8 @@ Firstly, we need to load the model that I have trained before this workshop on t
 ```python
 # TASK 5.1: Load trained model
 from keras.models import load_model
-model_basic = load_model('./drive/NTUOSS-ImageRecognitionWorkshop/data/model/cnn_model_basic.h5')
+model_basic = load_model('./drive/NTUOSS-ImageRecognitionWorkshop-Data/model/cnn_model_basic.h5')
+# model_basic = load_model('./drive/NTUOSS-ImageRecognitionWorkshop/cnn_model_basic.h5') # To load the model you train
 ```
 
 #### 5.2 Generate Test Image Data from Directory
@@ -603,7 +591,7 @@ from keras.preprocessing.image import ImageDataGenerator
 datagen_test = ImageDataGenerator(rescale=1. / 255)
 
 test_data = datagen_test.flow_from_directory (
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/test',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/test',
     target_size = (150, 150),
     class_mode = None,
     shuffle = False,
@@ -632,11 +620,11 @@ As shown below, the filenames help indicate the class of the image.
 #### 5.3 Make Prediction
 Then, we use the ```.predict_generator``` function of the model to classify out test data. Simply put the test data in the parameter.
 ```python
-# TASK 5.3.1: Use model to yield probability prediction for test data
-probabilities = model_basic.predict_generator(test_data)
-print(probabilities)
+# TASK 5.3.1: Use model to yield score prediction for test data
+scores = model_basic.predict_generator(test_data)
+print(scores)
 ```
-Here, we will see the output for each image is a probability between 0 and 1.
+Here, we will see the output for each image is a score between 0 and 1.
 ```
 [[0.14854874]
  [0.74102986]
@@ -650,10 +638,10 @@ Here, we will see the output for each image is a probability between 0 and 1.
 
 As it may takes some time for our model to make prediction, let's do some preparation while waiting for the result.
 
-Here, we set the threshold as 0.5, which means a probability above 0.5 indicates 1 (dog), otherwise 0 (cat).
+Here, we will round the score, so that a score above 0.5 will become 1 (dog), otherwise 0 (cat).
 ```python
-# TASK 5.3.2: Process probabilities to get prediction result
-y_pred = [1 if prob > 0.5 else 0 for prob in probabilities]
+# TASK 5.3.2: Process scores to get prediction result
+y_pred = [round(score[0]) for score in scores]
 print(y_pred)
 ```
 
@@ -711,10 +699,10 @@ Before that, we need to code some useful functions to read the image, preprocess
 This first function returns an image from a given url.
 ```python
 # TASK 6.1.1: Define a function for reading image from url
+import requests, io
+from PIL import Image
 def read_image_from_url(url):
     try:
-        import requests, io
-        from PIL import Image
         r = requests.get(url, timeout=15)
         img = Image.open(io.BytesIO(r.content))
         return img
@@ -726,9 +714,9 @@ def read_image_from_url(url):
 This second function process an given image to an arrays in the format that match our model's input requirements.
 ```python
 # TASK 6.1.2: Define a function for preprocessing image
+from PIL import Image
+import numpy as np
 def preprocess_image(img, target_size):
-    from PIL import Image
-    import numpy as np
     from keras.preprocessing.image import img_to_array
     img = img.resize(target_size,Image.ANTIALIAS)
     img = img_to_array(img)
@@ -736,14 +724,13 @@ def preprocess_image(img, target_size):
     img = img.astype('float32')
     img /= 255
     return img
-
 ```
 
 This last function returns whether a 'dog' or a 'cat' given the probability outputted by the model
 ```python
 # TASK 6.1.3: Define a function for processing result
-def process_result(prob):
-    return 'dog' if prob > 0.5 else 'cat'
+def process_result(score):
+    return 'dog' if score > 0.5 else 'cat'
 ```
 
 #### 6.2 Make Prediction
@@ -752,9 +739,9 @@ Now, you can play with the model and feel free to copy paste the url of any dog 
 # TASK 6.2: Read image, Preprocess image, and Make prediction
 image = read_image_from_url('https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg') # replace with any image url
 image = preprocess_image(image, (150, 150))
-prob = model_basic.predict(image)
-print('Probability: ' + str(prob))
-print('Class: ' + process_result(prob))
+score = model_basic.predict(image)
+print('Score: ' + str(score))
+print('Class: ' + process_result(score))
 ```
 
 There it goes, the model predicts the image as a cat accurately!
@@ -946,9 +933,10 @@ Same as before, we load the advanced model that I trained before this workshop.
 #### 9.1 Load Model
 Put the address of the model in the parameter of the ```.load_model``` function.
 ```python
-# TASK 9.1: Load trained model
+# TASK 5.1: Load trained model
 from keras.models import load_model
-model_advanced = load_model('./drive/NTUOSS-ImageRecognitionWorkshop/data/model/cnn_model_advanced.h5')
+model_advanced = load_model('./drive/NTUOSS-ImageRecognitionWorkshop-Data/model/cnn_model_advanced.h5')
+# model_basic = load_model('./drive/NTUOSS-ImageRecognitionWorkshop/cnn_model_advanced.h5') # To load the model you train
 ```
 
 #### 9.2 Generate Test Image Data from Directory
@@ -959,10 +947,10 @@ from keras.preprocessing.image import ImageDataGenerator
 datagen_test = ImageDataGenerator(rescale=1. / 255)
 
 test_data = datagen_test.flow_from_directory (
-    directory = './drive/NTUOSS-ImageRecognitionWorkshop/data/test',
+    directory = './drive/NTUOSS-ImageRecognitionWorkshop-Data/test',
     target_size = (150, 150),
     class_mode = None,
-    shuffle = False, # keep data in same order as labels
+    shuffle = False,
     batch_size = 200)
 ```
 
@@ -975,67 +963,33 @@ print(test_data.filenames)
 
 #### 9.3 Make Prediction
 
-Use the advanced model to make predictions for test data.
+Use the advanced model to make predictions for test data and check its performance.
 ```python
-# TASK 9.3.1: Use model to yield probability prediction for test data
-probabilities = model_advanced.predict_generator(test_data)
-print(probabilities)
-```
+# TASK 9.3: Make prediction and Check model performance
 
-```
-[[8.9933887e-02]
- [5.1956624e-01]
- [5.7828718e-01]
- ...
- ...
- [9.9898058e-01]
- [9.9089313e-01]
- [9.9960285e-01]]
-```
+# Use model to yield score prediction for test data
+scores = model_advanced.predict_generator(test_data)
 
-Process probabilities to get prediction result.
-```python
-# TASK 9.3.2: Process probabilities to get prediction result
-y_pred = [1 if prob > 0.5 else 0 for prob in probabilities]
-print(y_pred)
-```
+# Process scores to get prediction result
+y_pred = [round(score[0]) for score in scores]
 
-```
-[0, 1, 1, 0, ... 1, 1, 1, 1]
-```
-
-Prepare the actual results using folder name in filenames.
-```python
-# TASK 9.3.3: Prepare actual result using folder name in filenames
+# Prepare actual result using filenames
 y_true = [0 if 'cat' in filename else 1 for filename in test_data.filenames]
-print(y_true)
-```
 
-```
-[0, 0, 0, 0, 0, ... 1, 1, 1, 1, 1]
-```
-
-Calculate accuracy score.
-```python
-# TASK 9.3.4: Calculate accuracy score
+# Calculate accuracy score
 from sklearn.metrics import accuracy_score
 print(accuracy_score(y_true, y_pred))
+
+# Generate a report
+import pandas as pd
+pd.crosstab(pd.Series(y_true), pd.Series(y_pred), rownames = ['True'], colnames = ['Pred'], margins = True)
+
 ```
 
 We can observe a higher accuracy score.
 ```
 0.83
-```
 
-Then, generate a more detailed report.
-```python
-# TASK 9.3.5: Generate a report
-import pandas as pd
-pd.crosstab(pd.Series(y_true), pd.Series(y_pred), rownames = ['True'], colnames = ['Pred'], margins = True)
-```
-
-Are you able to read the report below?
-```
 Pred	0	1	All
 True			
 0	70	30	100
@@ -1053,9 +1007,9 @@ Now, feel free to play with the advanced model and have fun!
 # TASK 10.1: Read image, Preprocess image, and Make prediction
 image = read_image_from_url('https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg') # replace with any image url
 image = preprocess_image(image, (150, 150))
-prob = model_advanced.predict(image)
-print('Probability: ' + str(prob))
-print('Class: ' + process_result(prob))
+score = model_advanced.predict(image)
+print('Score: ' + str(score))
+print('Class: ' + process_result(score))
 ```
 
 ```
