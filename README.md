@@ -571,7 +571,7 @@ Thus, click on the small circle to stop the running of this cell, as shown below
 
 
 ## Task 5 - Test Model
-Sa we can see from the training history, the final accuracy score is 74% for train data and 78% for validation data. Now let us test the model with our own test data.
+As ,we can see from the training history, the final accuracy score is 74% for train data and 78% for validation data. Now let us test the model with our own test data.
 
 #### 5.1 Load Model
 
