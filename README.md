@@ -747,13 +747,17 @@ Now, you can play with the model and feel free to copy paste the url of any dog 
 image = read_image_from_url('https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg') # replace with any image url
 image = preprocess_image(image, (150, 150))
 score = model_basic.predict(image)
-print('Score: ' + str(score))
+if score > 0.5:
+  print('Probability: ' + str(score))
+else:
+  print('Probability: ' + str(1 - score))
 print('Class: ' + process_result(score))
 ```
 
+Here we use score always larger than 0.5 to intutively show the certainty of the prediction.
 There it goes, the model predicts the image as a cat accurately!
 ```
-Probability: [[0.3044719]]
+Probability: [[0.6955281]]
 Class: cat
 ```
 So far, we have successfully built from scratch a basic CNN model, which has a acceptable level of accuracy. The question now is - is there any way for us to push for a higher accuracy yet without any much more efforts?
@@ -817,7 +821,6 @@ Now our model has two part - base model and new layers. Since the base model con
 # TASK 7.2.3: Setup trainable layer
 for layer in base_model.layers:
     layer.trainable = False
-model.compile(loss = 'binary_crossentropy', optimizer = 'rmsprop', metrics = ['accuracy'])
 print("{:<10} Pretrained model layers: {}".format('[INFO]', len(base_model.layers)))
 print("{:<10} Total number of layers : {}".format('[INFO]', len(model.layers)))
 ```
@@ -1015,12 +1018,15 @@ Now, feel free to play with the advanced model and have fun!
 image = read_image_from_url('https://www.readersdigest.ca/wp-content/uploads/2011/01/4-ways-cheer-up-depressed-cat.jpg') # replace with any image url
 image = preprocess_image(image, (150, 150))
 score = model_advanced.predict(image)
-print('Score: ' + str(score))
+if score > 0.5:
+  print('Probability: ' + str(score))
+else:
+  print('Probability: ' + str(1 - score))
 print('Class: ' + process_result(score))
 ```
 
 ```
-Probability: [[0.18195716]]
+Probability: [[0.81804283]]
 Class: cat
 ```
 
