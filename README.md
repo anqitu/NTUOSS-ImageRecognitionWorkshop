@@ -253,7 +253,7 @@ Here we import the [```ImageDataGenerator```](https://keras.io/preprocessing/ima
 - **zoom_range = 0.2**: Float. Fraction range for random zoom.
 - **horizontal_flip = True**: Boolean. Randomly flip inputs horizontally.
 
-We will only apply the data augmentation for training data as we want to enlarge the data to feed the mode. For the validation data, we only apply the scaling since its purpose it to provide an unbiased performance measurement for the model and we do not want to mess up with it.
+We will only apply the data augmentation for training data as we want to enlarge the data to feed the mode. For the validation data, we only apply the scaling since its purpose is to provide an unbiased performance measurement for the model and we do not want to mess up with it.
 
 ```python
 # TASK 2.1 : Add augmentation configuration for the data generator of train data only
@@ -362,7 +362,7 @@ To understand the actual math behind all the concepts, i suggest you to go learn
 Now, let us see what each of the above packages are imported for:
 
 - **Sequential**: The Sequential model is used to initialise our neural network model, so that we can add layers in this model.
-- **Conv2D**: The convolution operation is usually the first step of a CNN on the training images. This layer contains many filters each of which can be imagined as a flashlight that is shedding light upon and sliding over the image. The flashlight in this layer is looking for specific features. If they find the features they are looking for, they produce a high activation. Each filter is initialized randomly initially and will be modified during the training process. Since we are working on images here, which a basically 2D arrays, we’re using Convolution 2-D. ([Read more on Convolutional Layers](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/))</br></br>
+- **Conv2D**: The convolution operation is usually the first step of a CNN on the training images. This layer contains many filters each of which can be imagined as a flashlight that is shedding light upon and sliding over the image. The flashlight in this layer is looking for specific features. If they find the features they are looking for, they produce a high activation. Each filter is initialized randomly initially and will be modified during the training process. Since we are working on images here, which are basically 2D arrays, we’re using Convolution 2-D. ([Read more on Convolutional Layers](https://adeshpande3.github.io/adeshpande3.github.io/A-Beginner's-Guide-To-Understanding-Convolutional-Neural-Networks/))</br></br>
 
 <p align="center">
   <img src="https://github.com/anqitu/NTUOSS-ImageRecognitionWorkshop/blob/master/screenshots/task_3_1_2_b.gif">
@@ -406,7 +406,7 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 Let’s break down the above code parameter by parameter. We take the sequential model object, then add a convolution layer by using the “Conv2D” function. The Conv2D function is taking 4 arguments:
 - the number of filters i.e 32
 - the size of each filter i.e 3x3
-- the activation function to be used i.e ‘relu’. ReLU (Rectified Linear Units) is an the activation layer that introduces nonlinearity to a system. ([Read more on ReLU](http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf))
+- the activation function to be used i.e ‘relu’. ReLU (Rectified Linear Units) is an activation layer that introduces nonlinearity to a system. ([Read more on ReLU](http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf))
 
 - the input shape. We only need to specify the input shape for the first layer. Since, we’re using the TensorFlow backend, we arrange the input shape with “channels last” data ordering. The height and width should also corresponds to the image size we set for the data generator, which is (150, 150, 3).
 
@@ -571,7 +571,7 @@ Thus, click on the small circle to stop the running of this cell, as shown below
 
 
 ## Task 5 - Test Model
-Sa we can see from the training history, the final accuracy score is 74% for train data and 78% for validation data. Now let us test the model with our own test data.
+As we can see from the training history, the final accuracy score is 74% for train data and 78% for validation data. Now let us test the model with our own test data.
 
 #### 5.1 Load Model
 
